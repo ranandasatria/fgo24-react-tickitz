@@ -1,0 +1,220 @@
+@import "tailwindcss";
+
+
+@theme {
+  --font-dm-sans: "DM Sans", sans-serif;
+   /* === Brand Colors: Orange === */
+  --color-orange-50: #FDE1D2;
+  --color-orange-100: #FCCDB3;
+  --color-orange-200: #FBB48D;
+  --color-orange-300: #FA9B68;
+  --color-orange-400: #F88242;
+  --color-orange-500: #F7691C;
+  --color-orange-600: #CE5817;
+  --color-orange-700: #A54613;
+  --color-orange-800: #7C350E;
+  --color-orange-900: #522309;
+
+  /* === Neutrals (Black & White Colors) === */
+  --color-neutral-50: #FFFFFF;
+  --color-neutral-100: #D4D4D4;
+  --color-neutral-200: #AAAAAA;
+  --color-neutral-300: #808080;
+  --color-neutral-400: #555555;
+  --color-neutral-500: #333333;
+  --color-neutral-600: #2B2B2B;
+  --color-neutral-700: #161616;
+  --color-neutral-800: #090909;
+  --color-neutral-900: #000000;
+
+  /* === Black === */
+  --color-black-50: #D0D0D1;
+  --color-black-100: #B1B0B2;
+  --color-black-200: #89898B;
+  --color-black-300: #626265;
+  --color-black-400: #3B3A3F;
+  --color-black-500: #141318;
+  --color-black-600: #111014;
+  --color-black-700: #0D0D10;
+  --color-black-800: #0A0A0C;
+  --color-black-900: #070608;
+
+  /* === Grey === */
+  --color-grey-50: #EAEDEE;
+  --color-grey-100: #DBE0E3;
+  --color-grey-200: #C9D1D5;
+  --color-grey-300: #B8C2C7;
+  --color-grey-400: #A6B2B9;
+  --color-grey-500: #94A3AB;
+  --color-grey-600: #7B888E;
+  --color-grey-700: #636D72;
+  --color-grey-800: #4A5256;
+  --color-grey-900: #1E2122;
+
+  /* === Light Grey === */
+  --color-light-grey-50: #FDFEFE;
+  --color-light-grey-100: #FDFDFD;
+  --color-light-grey-200: #FCFCFC;
+  --color-light-grey-300: #F3F3F3;
+  --color-light-grey-400: #F9F9F9;
+  --color-light-grey-500: #F8F8F8;
+  --color-light-grey-600: #A5A5A5;
+  --color-light-grey-700: #7C7C7C;
+  --color-light-grey-800: #535353;
+  --color-light-grey-900: #323232;
+
+  /* === Support Colors === */
+  /* Wrong - Red */
+  --color-wrong-50: #FBDDDD;
+  --color-wrong-100: #F9C6C6;
+  --color-wrong-200: #F5AAAA;
+  --color-wrong-300: #F28E8E;
+  --color-wrong-400: #EF7171;
+  --color-wrong-500: #EC5555;
+  --color-wrong-600: #CD4545;
+  --color-wrong-700: #A43737;
+  --color-wrong-800: #7B2A2A;
+  --color-wrong-900: #521C1C;
+
+  /* Alert - Orange */
+  --color-alert-50: #FAE8CC;
+  --color-alert-100: #F7D9AA;
+  --color-alert-200: #F2C580;
+  --color-alert-300: #EEB255;
+  --color-alert-400: #EA9F2B;
+  --color-alert-500: #E68C00;
+  --color-alert-600: #C07500;
+  --color-alert-700: #995D00;
+  --color-alert-800: #734600;
+  --color-alert-900: #4D2F00;
+
+  /* Success - Green */
+  --color-success-50: #CDE6DF;
+  --color-success-100: #ACD5C9;
+  --color-success-200: #82C0AE;
+  --color-success-300: #58AC93;
+  --color-success-400: #2F9778;
+  --color-success-500: #05825D;
+  --color-success-600: #046C4E;
+  --color-success-700: #03573E;
+  --color-success-800: #03412F;
+  --color-success-900: #022B1F;
+
+  /* Info - Blue */
+  --color-info-50: #CFE1FB;
+  --color-info-100: #AFCEF8;
+  --color-info-200: #87B5F4;
+  --color-info-300: #5F9CF0;
+  --color-info-400: #3784ED;
+  --color-info-500: #0F6BE9;
+  --color-info-600: #0D59C2;
+  --color-info-700: #0A479B;
+  --color-info-800: #05244E;
+  --color-info-900: #03152F;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+}
+
+
+@layer utilities {
+  /* === Headlines === */
+  .headline-1 { @apply font-black text-[2.25rem] leading-[2.75rem]; }
+  .headline-1-xl { @apply font-black text-[4rem] leading-[4.75rem]; }
+
+  .headline-2 { @apply font-black text-[1.75rem] leading-[2.25rem]; }
+  .headline-2-xl { @apply font-black text-[4rem] leading-[4.75rem]; }
+
+  .headline-3 { @apply font-black text-[1.25rem] leading-[1.75rem]; }
+  .headline-4 { @apply font-black text-[4rem] leading-[4.75rem]; }
+
+  /* Extra Bold Variants */
+  .headline-1-eb { @apply font-extrabold text-[2.25rem] leading-[2.75rem]; }
+  .headline-2-eb { @apply font-extrabold text-[1.75rem] leading-[2.25rem]; }
+  .headline-3-eb { @apply font-extrabold text-[1.25rem] leading-[1.75rem]; }
+  .headline-4-eb { @apply font-extrabold text-[4rem] leading-[4.75rem]; }
+
+  /* Bold Variants */
+  .headline-1-bold { @apply font-bold text-[2.25rem] leading-[2.75rem]; }
+  .headline-2-bold { @apply font-bold text-[1.75rem] leading-[2.25rem]; }
+  .headline-3-bold { @apply font-bold text-[1.25rem] leading-[1.75rem]; }
+  .headline-4-bold { @apply font-bold text-[4rem] leading-[4.75rem]; }
+
+  /* Semi Bold */
+  .headline-1-semibold { @apply font-semibold text-[4rem] leading-[4.75rem]; }
+  .headline-2-semibold { @apply font-semibold text-[1.75rem] leading-[2.25rem]; }
+  .headline-3-semibold { @apply font-semibold text-[1.25rem] leading-[1.75rem]; }
+  .headline-4-semibold { @apply font-semibold text-[2.25rem] leading-[2.75rem]; }
+
+  /* Medium */
+  .headline-1-medium { @apply font-medium text-[4rem] leading-[4.75rem]; }
+  .headline-2-medium { @apply font-medium text-[1.75rem] leading-[2.25rem]; }
+  .headline-3-medium { @apply font-medium text-[1.25rem] leading-[1.75rem]; }
+  .headline-4-medium { @apply font-medium text-[2.25rem] leading-[2.75rem]; }
+
+  /* Regular */
+  .headline-1-regular { @apply font-normal text-[4rem] leading-[4.75rem]; }
+  .headline-2-regular { @apply font-normal text-[1.75rem] leading-[2.25rem]; }
+  .headline-3-regular { @apply font-normal text-[1.25rem] leading-[1.75rem]; }
+  .headline-4-regular { @apply font-normal text-[2.25rem] leading-[2.75rem]; }
+
+  /* === Body === */
+  .body-1 { @apply text-[1.125rem] leading-[1.75rem]; }
+  .body-2 { @apply text-[1rem] leading-[1.5rem]; }
+  .body-3 { @apply text-[0.875rem] leading-[1.25rem]; }
+
+  .body-1-black { @apply font-black text-[1.125rem] leading-[1.75rem]; }
+  .body-1-extrabold { @apply font-extrabold text-[1.125rem] leading-[1.75rem]; }
+  .body-1-bold { @apply font-bold text-[1.125rem] leading-[1.75rem]; }
+  .body-1-semibold { @apply font-semibold text-[1.125rem] leading-[1.75rem]; }
+  .body-1-medium { @apply font-medium text-[1.125rem] leading-[1.75rem]; }
+  .body-1-regular { @apply font-normal text-[1.125rem] leading-[1.75rem]; }
+
+  .body-2-black { @apply font-black text-[1rem] leading-[1.5rem]; }
+  .body-2-bold { @apply font-bold text-[1rem] leading-[1.5rem]; }
+  .body-2-semibold { @apply font-semibold text-[1rem] leading-[1.5rem]; }
+  .body-2-medium { @apply font-medium text-[1rem] leading-[1.5rem]; }
+  .body-2-regular { @apply font-normal text-[1rem] leading-[1.5rem]; }
+
+  .body-3-black { @apply font-black text-[0.875rem] leading-[1.25rem]; }
+  .body-3-bold { @apply font-bold text-[0.875rem] leading-[1.25rem]; }
+  .body-3-semibold { @apply font-semibold text-[0.875rem] leading-[1.25rem]; }
+  .body-3-medium { @apply font-medium text-[0.875rem] leading-[1.25rem]; }
+  .body-3-regular { @apply font-normal text-[0.875rem] leading-[1.25rem]; }
+
+  /* === Buttons / Links === */
+  .button-normal { @apply text-[1.125rem] leading-[1.5rem]; }
+  .button-medium { @apply text-[1rem] leading-[1.25rem]; }
+  .button-small { @apply text-[0.875rem] leading-[1rem]; }
+
+  .button-normal-black { @apply font-black text-[1.125rem] leading-[1.5rem]; }
+  .button-medium-bold { @apply font-bold text-[1rem] leading-[1.25rem]; }
+  .button-small-semibold { @apply font-semibold text-[0.875rem] leading-[1rem]; }
+
+  /* === Fields === */
+  .field-text1 { @apply text-[1rem] leading-[1.5rem]; }
+  .field-text2 { @apply text-[0.75rem] leading-[1rem]; }
+
+  .field-text1-black { @apply font-black text-[1rem] leading-[1.5rem]; }
+  .field-text1-bold { @apply font-bold text-[1rem] leading-[1.5rem]; }
+  .field-text1-regular { @apply font-normal text-[1rem] leading-[1.5rem]; }
+
+  .field-text2-black { @apply font-black text-[0.75rem] leading-[1rem]; }
+  .field-text2-bold { @apply font-bold text-[0.75rem] leading-[1rem]; }
+  .field-text2-regular { @apply font-normal text-[0.75rem] leading-[1rem]; }
+
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* * {
+  @apply border border-red-500
+} */
