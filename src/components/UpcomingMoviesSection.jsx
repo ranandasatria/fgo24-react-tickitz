@@ -70,7 +70,7 @@ export default function UpcomingMoviesSection() {
                   />
                 </button>
               </div>
-              <Button variant="primary" to="/nowshowing">
+              <Button variant="primary" to="/movie">
                 View All
               </Button>
             </div>

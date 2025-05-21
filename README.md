@@ -21,7 +21,7 @@ Tickitz is a React-based web application designed to help users explore and disc
 ## Getting Started
 1. Clone this project:
 ```
-git clone https://github.com/ranandasatria/fgo24-react-form
+git clone https://github.com/ranandasatria/fgo24-react-tickitz
 ```
 
 2. Install the depedencies:

@@ -75,7 +75,7 @@ export default function NowPlayingSection() {
           style={{ width: `${Math.min(scrollPosition, 100)}%` }}
         ></div>
       </div>
-      <Button variant="primary" to="/nowshowing">
+      <Button variant="primary" to="/movie">
         View All
       </Button>
     </div>

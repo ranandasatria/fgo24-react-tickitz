@@ -8,28 +8,24 @@ import InputRadio from '../components/InputRadio';
 import FetchMovieAPI from '../components/FetchMovie';
 
 function MovieDetail() {
-  const { id } = useParams()
-
-  const { genres, fetchMovieDetails } = FetchMovieAPI()
-
-  const [movie, setMovie] = useState(null)
-
-  const [selectedCinema, setSelectedCinema] = useState('')
+  const { id } = useParams();
+  const { genres, fetchMovieDetails } = FetchMovieAPI();
+  const [movie, setMovie] = useState(null);
+  const [selectedCinema, setSelectedCinema] = useState('');
 
   useEffect(() => {
     async function loadMovieDetails() {
-      const details = await fetchMovieDetails(id)
-      setMovie(details)
+      const details = await fetchMovieDetails(id);
+      setMovie(details);
     }
-    loadMovieDetails()
-  }, [id, fetchMovieDetails])
+    loadMovieDetails();
+  }, [id, fetchMovieDetails]);
 
-
-  const movieGenre = genres.find((genre) => movie?.genre_ids?.includes(genre.id))?.name
+  const movieGenre = genres.find((genre) => movie?.genre_ids?.includes(genre.id))?.name;
 
   const handleCinemaChange = (value) => {
-    setSelectedCinema(value)
-  }
+    setSelectedCinema(value);
+  };
 
   return (
     <>
@@ -42,7 +38,7 @@ function MovieDetail() {
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
-            borderRadius: '2rem'
+            borderRadius: '2rem',
           }}
         >
           <div className="flex w-[53.1875rem] flex-col justify-end gap-4">
@@ -71,7 +67,9 @@ function MovieDetail() {
             <div className="flex flex-col items-start gap-2">
               <div className="body-1-regular text-black-500">Duration</div>
               <div className="headline-3-bold">
-                {movie?.runtime ? `${Math.floor(movie.runtime / 60)} hours ${movie.runtime % 60} minutes` : ''}
+                {movie?.runtime
+                  ? `${Math.floor(movie.runtime / 60)} hours ${movie.runtime % 60} minutes`
+                  : ''}
               </div>
             </div>
           </div>
@@ -90,7 +88,9 @@ function MovieDetail() {
       <div className="flex p-20 flex-col items-start gap-10 self-stretch bg-neutral-100 rounded-4xl mb-8">
         <div className="flex items-center gap-[3.75rem] w-full justify-between">
           <h1 className="headline-1-bold text-black-800">Book Tickets</h1>
-          <Button variant="primary">BOOK NOW</Button>
+          <Button variant="primary" to="/buyticket">
+            BOOK NOW
+          </Button>
         </div>
         <div className="flex items-center gap-8 self-stretch">
           <div className="flex w-96 flex-col items-start gap-4">
@@ -153,7 +153,7 @@ function MovieDetail() {
               checked={selectedCinema === 'hiflix'}
               onChange={() => handleCinemaChange('hiflix')}
             />
-             <InputRadio
+            <InputRadio
               htmlFor="ebuid1"
               src="/assets/ebugray.svg"
               id="ebuid1"

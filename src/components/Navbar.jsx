@@ -26,7 +26,7 @@ function Navbar() {
             {({ isActive }) => (isActive ? <div className="h-2 w-2 rounded-full bg-orange-500" /> : null)}
           </NavLink>
           <NavLink
-            to="/moviedetail"
+            to="/buyticket"
             className={({ isActive }) =>
               `flex flex-col items-center gap-1 ${isActive ? 'text-black' : 'text-gray-600'}`
             }
@@ -36,10 +36,10 @@ function Navbar() {
           </NavLink>
         </div>
         <div className="flex gap-2">
-          <Button variant="secondary" to="/">
+          <Button variant="secondary" to="/signup">
             Sign Up
           </Button>
-          <Button variant="primary" to="/">
+          <Button variant="primary" to="/login">
             Login
           </Button>
         </div>
