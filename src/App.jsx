@@ -6,6 +6,11 @@ import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import BuyTicket from './pages/BuyTicket';
 import Checkout from './pages/Checkout';
+import Ticket from './pages/Ticket';
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistor, store } from './redux/store'
+
 
 const router = createBrowserRouter([
   {
@@ -32,14 +37,24 @@ const router = createBrowserRouter([
     path: '/buyticket',
     element: <BuyTicket />
   },
-   {
+  {
     path: '/checkout',
     element: <Checkout />
+  },
+  {
+    path: '/ticket',
+    element: <Ticket />
   }
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+  <Provider store={store}>
+    <PersistGate persistor={persistor}>
+      <RouterProvider router={router} />
+    </PersistGate>
+  </Provider>
+  )
 }
 
 export default App;

@@ -24,11 +24,6 @@ const SummaryCard = ({ cinema, movieTitle, date, time, ticketPrice, seats, total
           Total Payment <span className="float-right text-blue-600">${total}</span>
         </div>
       </div>
-      <div className="mt-6">
-        <Button to="/checkout" variant="primary" className="w-full">
-          Checkout now
-        </Button>
-      </div>
     </div>
   );
 };

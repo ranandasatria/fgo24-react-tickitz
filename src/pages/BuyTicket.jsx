@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Navbar from '../components/Navbar';
 import FooterSection from '../components/FooterSection';
 import IconRound from '../components/Icon';
@@ -7,27 +9,60 @@ import SeatGrid from '../components/SeatGrid';
 import SummaryCard from '../components/SummaryCard';
 
 function BuyTicket() {
+  const location = useLocation()
+  const navigate = useNavigate()
+  const { movie, genres, date, time, selectedLocation, cinema } = location.state || {}
+  const currentUser = useSelector((state) => state.auth.currentUser)
 
-  const dummyMovie = {
+  const fallbackMovie = {
     title: 'Final Destination',
     poster_path: '/assets/finaldestination.png',
     genre_ids: [27, 53],
-  };
-
-  const dummyGenres = [
+  }
+  const fallbackGenres = [
     { id: 27, name: 'Horror' },
     { id: 53, name: 'Thriller' },
-  ];
+  ]
 
-
-  const [selectedSeats, setSelectedSeats] = useState([]);
-
+  const [selectedSeats, setSelectedSeats] = useState([])
 
   const handleSeatToggle = (seat) => {
     setSelectedSeats((prev) =>
       prev.includes(seat) ? prev.filter((s) => s !== seat) : [...prev, seat]
-    );
-  };
+    )
+  }
+
+  const handleCheckout = () => {
+    if (!currentUser) {
+      navigate('/login')
+      return
+    }
+    navigate('/checkout', {
+      state: {
+        movie,
+        genres,
+        date,
+        time,
+        location: selectedLocation,
+        cinema,
+        seats: selectedSeats,
+        total: selectedSeats.length * 10,
+      },
+    })
+  }
+
+  const displayMovie = movie || fallbackMovie
+  const displayMovieWithPoster = {
+    ...displayMovie,
+    poster_path: displayMovie.poster_path?.startsWith('/assets')
+      ? displayMovie.poster_path
+      : `https://image.tmdb.org/t/p/w200${displayMovie.poster_path}`,
+  }
+  const displayGenres = genres || fallbackGenres
+  const displayDate = date || 'Wednesday, 21 May, 2025'
+  const displayTime = time || '11:35 PM'
+  const displayCinema = cinema || 'CineOne21'
+
 
   return (
     <>
@@ -50,35 +85,35 @@ function BuyTicket() {
       </div>
 
       <div className="flex flex-col lg:flex-row justify-between gap-8 px-8 mb-12">
-        {/* Left Side */}
         <div className="flex-1 border rounded-xl shadow p-6">
-          <MovieCard
-            movie={dummyMovie}
-            genres={dummyGenres}
-            time="11:35 PM"
-          />
+          <MovieCard movie={displayMovieWithPoster} genres={displayGenres} time={displayTime} />
           <h3 className="font-semibold mb-4">Choose Your Seat</h3>
-          <SeatGrid
-            selectedSeats={selectedSeats}
-            onSeatToggle={handleSeatToggle}
-          />
+          <SeatGrid selectedSeats={selectedSeats} onSeatToggle={handleSeatToggle} />
         </div>
-
-        {/* Right Side */}
-        <SummaryCard
-          cinema="CineOne21"
-          movieTitle={dummyMovie.title}
-          date="Wednesday, 21 May, 2025"
-          time="11:35 PM"
-          ticketPrice={10}
-          seats={selectedSeats}
-          total={selectedSeats.length * 10}
-        />
+        <div className="flex-1 border rounded-xl shadow p-6">
+          <SummaryCard
+            cinema={displayCinema}
+            movieTitle={displayMovie.title}
+            date={displayDate}
+            time={displayTime}
+            ticketPrice={10}
+            seats={selectedSeats}
+            total={selectedSeats.length * 10}
+          />
+          <button
+            onClick={handleCheckout}
+            disabled={selectedSeats.length === 0}
+            className={`body-2-bold flex items-center justify-center px-5 py-3 rounded-2xl bg-orange-500 text-white w-full mt-4 ${
+              selectedSeats.length === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-orange-600'
+            }`}
+          >
+            Checkout now
+          </button>
+        </div>
       </div>
-
       <FooterSection />
     </>
-  );
+  )
 }
 
 export default BuyTicket;

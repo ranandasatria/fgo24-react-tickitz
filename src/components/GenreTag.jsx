@@ -5,7 +5,7 @@ function GenreTag({ movieGenreIds, genres, className = '' }) {
   const genreNames = genres
     .filter((genre) => movieGenreIds.includes(genre.id))
     .map((genre) => genre.name)
-    .slice(0, 2);
+    .slice(0, 2)
 
   return (
     <div className="flex gap-2">
@@ -26,7 +26,7 @@ function GenreTag({ movieGenreIds, genres, className = '' }) {
         </div>
       )}
     </div>
-  );
+  )
 }
 
 export default GenreTag;
