@@ -12,10 +12,10 @@ function ListMovie() {
       <div className="w-full grid grid-cols-4 items-center gap-8 px-20 py-10">
         {movies.map((movie) => (
           <Link key={movie.id} to={`/movie/${movie.id}`} className="flex w-[18.5rem] flex-col items-center justify-center gap-5 flex-shrink-0">
-            <div className="flex h-[27.75rem] w-full flex-col items-center justify-center bg-alert-400">
+            <div className="flex h-[27.75rem] w-full flex-col items-center justify-center">
               <img
                 className="h-[27.75rem] w-full rounded-2xl object-cover"
-                src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
                 alt={movie.title}
               />
             </div>

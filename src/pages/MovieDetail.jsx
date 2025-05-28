@@ -49,7 +49,7 @@ function MovieDetail() {
         <div
           className="px-20 py-10 h-[32.5rem] flex items-end justify-end"
           style={{
-            backgroundImage: `linear-gradient(180deg, rgba(15,16,13,0.00) 0%, rgba(15,16,13,0.80) 65.1%), url(https://image.tmdb.org/t/p/w1280${movie?.backdrop_path})`,
+            backgroundImage: `linear-gradient(180deg, rgba(15,16,13,0.00) 0%, rgba(15,16,13,0.80) 65.1%), url(https://image.tmdb.org/t/p/original${movie?.backdrop_path})`,
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
@@ -70,7 +70,7 @@ function MovieDetail() {
         </div>
         <img
           className="absolute top-63 left-20 w-[18.5rem] h-[27.75rem] flex-shrink-0 rounded-2xl"
-          src={`https://image.tmdb.org/t/p/w200${movie?.poster_path}`}
+          src={`https://image.tmdb.org/t/p/original${movie?.poster_path}`}
           alt={movie?.title}
         />
         <div className="flex w-[59rem] items-start gap-10 ml-105 mt-4 px-3">

@@ -44,7 +44,7 @@ function Login() {
       console.log('Navigating to home');
       navigate('/');
     } else {
-      setError('Invalid email or password');
+      setError('Wrong email or password');
     }
   };
 

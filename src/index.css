@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* 
+Pixels	 Tailwind	    REM
+4px	        1       0.25rem */
 
 @theme {
   --font-dm-sans: "DM Sans", sans-serif;

@@ -56,7 +56,7 @@ function BuyTicket() {
     ...displayMovie,
     poster_path: displayMovie.poster_path?.startsWith('/assets')
       ? displayMovie.poster_path
-      : `https://image.tmdb.org/t/p/w200${displayMovie.poster_path}`,
+      : `https://image.tmdb.org/t/p/original${displayMovie.poster_path}`,
   }
   const displayGenres = genres || fallbackGenres
   const displayDate = date || 'Wednesday, 21 May, 2025'

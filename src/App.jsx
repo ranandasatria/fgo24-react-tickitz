@@ -10,6 +10,7 @@ import Ticket from './pages/Ticket';
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistor, store } from './redux/store'
+import Profile from './pages/Profile';
 
 
 const router = createBrowserRouter([
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
   {
     path: '/ticket',
     element: <Ticket />
+  },
+  {
+    path: '/profile',
+    element: <Profile />
   }
 ]);
 
