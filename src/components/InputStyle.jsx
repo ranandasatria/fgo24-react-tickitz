@@ -25,11 +25,13 @@ function InputStyle({ label, id, placeholder, showChevron = false, ...props }) {
 
 export default InputStyle;
 
-export function InputNormal({label, id, ...props}){
+export function InputNormal({label, id, className, ...props}){
+  const baseStyles = 'body-3-regular placeholder:text-neutral-300 bg-neutral-50 px-5 py-3 rounded-md'
   return(
     <div className='flex flex-col gap-2 w-full'>
-    <label className='body-2-medium text-black-500' htmlFor={id}>{label}</label>
-    <input id={id} className='body-3-regular placeholder:text-neutral-300 bg-neutral-50 px-5 py-3 rounded-md' {...props}></input>
+    <label className='body-2-medium text-black-300' htmlFor={id}>{label}</label>
+    <input id={id} 
+    className={`${baseStyles} ${className}`} {...props}></input>
     </div>
   )
 }

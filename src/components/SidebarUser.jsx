@@ -5,12 +5,12 @@ import { RiCopperCoinLine } from "react-icons/ri";
 import { useSelector } from 'react-redux';
 
 function SidebarUser() {
-   const currentUser = useSelector((state)=> state.auth.currentUser)
+  const currentUser = useSelector((state)=> state.auth.currentUser)
   const username = currentUser ?  currentUser.email.split('@')[0]: ""
   return (
-    <div className='main flex w-full p-26 gap-26 bg-gray-50'>
-         <div className='sidebar flex flex-col rounded p-4 w-md items-center shadow-sm shadow-orange-500/50'>
-               <div className='cardheader flex items-center justify-between p-4 w-full'>
+    <div className='main flex w-80 bg-gray-50 rounded'>
+         <div className='sidebar flex flex-col rounded p-4 w-md items-center shadow-sm shadow-orange-50 pb-10'>
+            <div className='cardheader flex items-center justify-between p-4 w-full'>
              <p className='body-2-semibold'>INGFO</p>
              <GoKebabHorizontal className='text-orange-500 cursor-pointer'/>
            </div>           
@@ -41,13 +41,7 @@ function SidebarUser() {
              </div>
            </div>
          </div>
-         <div className='flex flex-col border rounded p-4 w-full'>
-           <div className='flex items-center justify-between p-4'>
-             <p className='body-2-semibold'>INGFO</p>
-             <GoKebabHorizontal className='text-orange-500'/>
-           </div>
-           <img src="./assets/gintoki.png" className='w-32 h-32 rounded-full'/>       
-         </div>   
+         
        </div>
   )
 }

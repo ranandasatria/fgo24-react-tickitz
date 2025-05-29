@@ -31,32 +31,26 @@ function SignUp() {
       email: '',
       password: '',
       terms: false,
+      phone: ''
     },
   })
 
   
-  
   const [error, setError] = useState('')
-
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
-
-
- 
-
 
   function isRegistered(email, users) {
     return users.some((user) => user.email === email)
   }
 
   function onSubmit(value) {
-    console.log('Form submitted:', value)
     const sanitizedValue = {
       ...value,
       password: btoa(value.password),
       email: value.email.trim(),
+      phone: ''
     }
     if (!isRegistered(sanitizedValue.email, users)) {
       setError('')
