@@ -1,5 +1,7 @@
 import FetchMovieAPI from './FetchMovie';
 import Button from './Button';
+import { Link } from 'react-router-dom';
+
 
 export default function UpcomingMoviesSection() {
   const { upcoming: upcomingMovies, genres } = FetchMovieAPI()
@@ -11,8 +13,9 @@ export default function UpcomingMoviesSection() {
           <div className="left-group flex w-full lg:w-[50.375rem] flex-col items-start gap-6 lg:gap-10 justify-between">
             <div className="movie-group grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 justify-center items-start gap-4 lg:gap-[1.125rem] self-stretch">
               {upcomingMovies.slice(0, 4).map((movie) => (
-                <div
+                <Link
                   key={movie.id}
+                  to={`/movie/${movie.id}`}
                   className="movie-card flex w-full max-w-[11.75rem] flex-col items-start justify-start gap-5"
                 >
                   <div className="poster flex w-full h-55 flex-col justify-start items-center self-stretch bg-black rounded-2xl">
@@ -33,7 +36,7 @@ export default function UpcomingMoviesSection() {
                       {movie.release_date}
                     </p>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
             <div className="flex flex-wrap items-center gap-4 self-stretch">

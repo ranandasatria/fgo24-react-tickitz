@@ -2,6 +2,8 @@ import FetchMovieAPI from './FetchMovie';
 import { useRef, useState } from 'react';
 import Button from './Button';
 import GenreTag from './GenreTag';
+import { Link } from 'react-router-dom';
+
 
 export default function NowPlayingSection() {
   const { movies, genres } = FetchMovieAPI()
@@ -48,8 +50,9 @@ export default function NowPlayingSection() {
         className="flex w-full overflow-x-auto gap-6 scroll-smooth hide-scrollbar"
       >
         {movies.map((movie) => (
-          <div
+          <Link
             key={movie.id}
+            to={`/movie/${movie.id}`}
             className="flex w-70 flex-col items-center justify-start gap-5 flex-shrink-0"
           >
             <div className="flex h-[328px] flex-col items-center justify-center">
@@ -66,7 +69,7 @@ export default function NowPlayingSection() {
             >
               {movie.title.length > 24 ? `${movie.title.slice(0, 24)}...` : movie.title}
             </h4>
-          </div>
+          </Link>
         ))}
       </div>
       <div className="slider w-full h-3 bg-gray-700 rounded-2xl overflow-hidden">
