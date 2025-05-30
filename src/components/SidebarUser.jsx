@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 function SidebarUser() {
   const currentUser = useSelector((state)=> state.auth.currentUser)
-  const username = currentUser ?  currentUser.email.split('@')[0]: ""
+  const username = currentUser?.name  ||currentUser?.email?.split('@')[0] || ""
   return (
     <div className='main flex w-80 bg-gray-50 rounded'>
          <div className='sidebar flex flex-col rounded p-4 w-md items-center shadow-sm shadow-orange-50 pb-10'>

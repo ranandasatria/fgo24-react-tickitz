@@ -9,7 +9,7 @@ function Navbar() {
   const currentUser = useSelector((state) => state.auth.currentUser)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
-  const username = currentUser ? currentUser.email.split('@')[0] : ''
+  const username = currentUser?.name  ||currentUser?.email?.split('@')[0] || ""
 
   const handleLogout = () => {
     dispatch(logoutAction())

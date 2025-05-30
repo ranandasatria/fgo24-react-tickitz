@@ -40,7 +40,7 @@ function Login() {
 
     if (user) {
       setError('');
-      dispatch(loginAction({ email: user.email, id: user.id }));
+      dispatch(loginAction({ email: user.email, id: user.id, name: user.name || user.email.split('@')[0]}));
       console.log('Navigating to home');
       navigate('/');
     } else {

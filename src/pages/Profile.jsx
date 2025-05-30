@@ -31,7 +31,7 @@ function Profile() {
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      name: users.find((user) => user.id === currentUser?.id)?.name || defaultName,
+      name: currentUser?.name || defaultName,
       email: currentUser?.email || '',
       phone: users.find((user) => user.id === currentUser?.id)?.phone || '',
       password: '',
@@ -69,7 +69,7 @@ function Profile() {
     
     dispatch(updateUserAction({ id: currentUser.id, updatedData: sanitizedData }))
     
-    dispatch(loginAction({ email: sanitizedData.email, id: currentUser.id }))
+    dispatch(loginAction({ email: sanitizedData.email, id: currentUser.id, name: sanitizedData.name }))
     setError('')
     alert('Profile updated successfully!') // jgn lupa ganti alert
   }
