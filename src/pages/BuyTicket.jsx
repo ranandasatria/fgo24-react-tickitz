@@ -11,7 +11,8 @@ import SummaryCard from '../components/SummaryCard';
 function BuyTicket() {
   const location = useLocation()
   const navigate = useNavigate()
-  const { movie, genres, date, time, selectedLocation, cinema } = location.state || {}
+  const { movie, genres, date, time, location: selectedLocation, cinema } = location.state || {}
+  console.log(selectedLocation)
   const currentUser = useSelector((state) => state.auth.currentUser)
 
   const fallbackMovie = {
@@ -43,7 +44,7 @@ function BuyTicket() {
         genres,
         date,
         time,
-        location: selectedLocation,
+        selectedLocation,
         cinema,
         seats: selectedSeats,
         total: selectedSeats.length * 10,
@@ -103,7 +104,7 @@ function BuyTicket() {
           <button
             onClick={handleCheckout}
             disabled={selectedSeats.length === 0}
-            className={`body-2-bold flex items-center justify-center px-5 py-3 rounded-2xl bg-orange-500 text-white w-full mt-4 ${
+            className={`body-2-bold flex items-center justify-center px-5 py-3 rounded-2xl bg-orange-500 text-white w-full mt-4 cursor-pointer ${
               selectedSeats.length === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-orange-600'
             }`}
           >

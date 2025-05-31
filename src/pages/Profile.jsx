@@ -84,6 +84,10 @@ function Profile() {
     setShowHistory(true)
   }
 
+
+  const bookedTickets = useSelector((state) => state.bookedTicket.bookedTicket);
+  const userTickets = bookedTickets.filter((ticket) => ticket.user === currentUser?.email);
+
   return (
     <>
       <Navbar />
@@ -161,18 +165,30 @@ function Profile() {
           )}
 
           {showHistory && (
-            <div className='flex flex-col bg-white p-6 rounded w-full items-end shadow-sm shadow-orange-50 gap-4'>
-              <div className='flex justify-between w-full'>
-                <div>
-                  <p className='body-3-regular text-gray-400'>Thursday, 29 May 2025 - 21.55 PM</p>
-                  <h1 className='headline-2-semibold'>Final Destination</h1>
-                </div>
-                <img src='./assets/cine1large.svg' alt="Order" />
-              </div>
-              <div className='border-b text-gray-300 w-full'></div>
-              <div className='bg-blue-200 text-blue-700 body-2-medium px-4 py-2 rounded-md w-25 flex items-center justify-center'>
-                Paid
-              </div>
+            <div className='flex flex-col bg-white p-6 rounded w-full shadow-sm shadow-orange-50 gap-6'>
+              {userTickets.length === 0 ? (
+                <p className="text-gray-500 text-center">No order history found.</p>
+              ) : (
+                userTickets.map((ticket) => (
+                  <div key={ticket.id} className='flex flex-col gap-4'>
+                    <div className='flex justify-between w-full items-center'>
+                      <div>
+                        <p className='body-3-regular text-gray-400'>
+                          {ticket.date} - {ticket.time}
+                        </p>
+                        <h1 className='headline-2-semibold'>{ticket.movie}</h1>
+                        
+                      </div>
+                      {/* <img src='./assets/cine1large.svg' alt="Cinema Logo" className="h-12" /> */}
+                       <p className='body-3-regular text-gray-500'>{ticket.cinema} - {ticket.seats.join(', ')}</p>
+                    </div>
+                    <div className='border-b text-gray-300 w-full'></div>
+                    <div className='bg-blue-200 text-blue-700 body-2-medium px-4 py-2 rounded-md w-25 flex items-center justify-center'>
+                      Paid
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           )}
         </div>

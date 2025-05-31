@@ -9,8 +9,35 @@ import Button from '../components/Button';
 function Ticket() {
   const location = useLocation()
   const navigate = useNavigate()
-  const { movie, date, time, location: selectedLocation, cinema, seats, total, user } = location.state || {}
+  const { ticketId } = location.state || {}
   const currentUser = useSelector((state) => state.auth.currentUser)
+  const bookedTickets = useSelector((state) => state.bookedTicket.bookedTicket)
+  const ticket = bookedTickets.find((t) => t.id === ticketId)
+
+
+  if (!currentUser) {
+    toast.error('Please log in to view your ticket.', {
+      style: {
+        background: '#ef4444',
+        color: '#fff',
+      },
+    })
+    navigate('/login')
+    return null
+  }
+
+
+  if (!ticket) {
+    return (
+      <>
+        <Navbar />
+        <div className="flex flex-col items-center my-8 px-4 md:px-8 max-w-7xl mx-auto">
+          <h3 className="text-2xl font-bold text-red-600">Ticket not found</h3>
+        </div>
+        <FooterSection />
+      </>
+    )
+  }
 
   const handleDownload = () => {
     toast.success('Download success!', {
@@ -22,18 +49,17 @@ function Ticket() {
   }
 
   const handleDone = () => {
-    navigate('/')
+    navigate('/profile')
   }
 
-  const displayMovie = movie || { title: 'Final Destination' }
-  const displayDateTime = `${date || 'Tuesday, 07 July 2020'} at ${time || '02:00 PM'}`
-  const displayCinema = cinema || 'CineOne21 Cinema'
-  const displayLocation = selectedLocation || 'Yogyakarta'
-  const displaySeats = seats ? seats.join(', ') : 'None'
-  const displayNumTickets = seats ? `${seats.length} ${seats.length === 1 ? 'ticket' : 'tickets'}` : '0 tickets'
-  const displayTotal = total ? `$${total.toFixed(2)}` : '$0.00'
-  const displayUser = currentUser || user || { email: 'guest@example.com' }
-  const username = displayUser.email.split('@')[0]
+  const username = currentUser.name || currentUser.email.split('@')[0]
+  const displayDateTime = `${ticket.date} at ${ticket.time}`
+  const displaySeats = ticket.seats.length > 0 ? ticket.seats.join(', ') : 'None'
+  const displayNumTickets =
+    ticket.seats.length > 0
+      ? `${ticket.seats.length} ${ticket.seats.length === 1 ? 'ticket' : 'tickets'}`
+      : '0 tickets'
+  const displayTotal = ticket.total ? `$${ticket.total.toFixed(2)}` : '$0.00'
 
   return (
     <>
@@ -41,7 +67,9 @@ function Ticket() {
       <div className="flex flex-col items-center my-8 px-4 md:px-8 max-w-7xl mx-auto">
         <div className="flex gap-4 items-center justify-center mb-8">
           <div className="flex flex-col justify-center items-center gap-2">
-            <div className="w-12 h-12 rounded-full bg-orange-500 text-white flex items-center justify-center text-lg font-bold">✓</div>
+            <div className="w-12 h-12 rounded-full bg-orange-500 text-white flex items-center justify-center text-lg font-bold">
+              ✓
+            </div>
             <p className="body-3-medium text-black-600">Payment Confirmed</p>
           </div>
         </div>
@@ -52,7 +80,7 @@ function Ticket() {
               <div className="flex-1 flex flex-col gap-4">
                 <div>
                   <p className="text-sm text-gray-500">Movie</p>
-                  <p className="text-base font-semibold">{displayMovie.title}</p>
+                  <p className="text-base font-semibold">{ticket.movie}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Date & Time</p>
@@ -60,11 +88,11 @@ function Ticket() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Location</p>
-                  <p className="text-base font-semibold">{displayLocation}</p>
+                  <p className="text-base font-semibold">{ticket.selectedLocation}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Cinema</p>
-                  <p className="text-base font-semibold">{displayCinema}</p>
+                  <p className="text-base font-semibold">{ticket.cinema}</p>
                 </div>
               </div>
               <div className="flex-1 flex flex-col gap-4">

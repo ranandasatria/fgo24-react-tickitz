@@ -14,7 +14,8 @@ function FetchMovieAPI() {
     try {
       //  now playing movies
       const movieResponse = await fetch(
-        `https://api.themoviedb.org/3/movie/now_playing?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=ja-JP®ion=JP`
+        `https://api.themoviedb.org/3/movie/now_playing?api_key=${import.meta.env.VITE_TMDB_API_KEY}`
+        // `https://api.themoviedb.org/3/movie/now_playing?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=ja-JP®ion=JP`
       )
       const movieData = await movieResponse.json()
       setMovies(movieData.results || [])
@@ -51,7 +52,8 @@ function FetchMovieAPI() {
 
       // movie details
       const movieResponse = await fetch(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=ja-JP`
+        `https://api.themoviedb.org/3/movie/${id}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`
+        // `https://api.themoviedb.org/3/movie/${id}?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=ja-JP`
       )
       const movieData = await movieResponse.json()
       

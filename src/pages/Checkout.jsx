@@ -1,20 +1,24 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { v4 as uuidv4 } from 'uuid';
 import Navbar from '../components/Navbar';
 import FooterSection from '../components/FooterSection';
 import IconRound from '../components/Icon';
 import { InputNormal } from '../components/InputStyle';
 import InputRadio from '../components/InputRadio';
 import Button from '../components/Button';
+import toast from 'react-hot-toast';
+import { bookedTicketAction } from '../redux/reducers/bookedTicket';
 
 function Checkout() {
   const location = useLocation()
   const navigate = useNavigate()
-  const { movie, date, time, location: selectedLocation, cinema, seats, total } = location.state || {}
+  const dispatch = useDispatch()
+  const { movie, date, time, selectedLocation, cinema, seats, total } = location.state || {}
   const currentUser = useSelector((state) => state.auth.currentUser)
 
   const validationSchema = yup.object({
@@ -29,19 +33,40 @@ function Checkout() {
   })
 
   const onSubmit = (data) => {
-    console.log('Form submitted:', data)
+    if (!currentUser) {
+      toast.error('Please log in to book a ticket.', {
+        style: { background: '#ef4444', color: '#fff' },
+      })
+      navigate('/login')
+      return
+    }
+
+    const ticketId = uuidv4()
+    const ticketData = {
+      id: ticketId, 
+      movie: movie?.title || 'Unknown Movie',
+      date: date || 'Unknown Date',
+      time: time || 'Unknown Time',
+      selectedLocation: selectedLocation || 'Unknown Location',
+      cinema: cinema || 'Unknown Cinema',
+      seats: seats || [],
+      total: total || 0,
+      user: currentUser.email,
+      paymentMethod: data.paymentMethod,
+    }
+
+    
+
+
+    dispatch(bookedTicketAction(ticketData))
+
+    toast.success('Ticket booked successfully!', {
+      style: { background: '#4ade80', color: '#fff' },
+    })
+
+
     navigate('/ticket', {
-      state: {
-        movie,
-        date,
-        time,
-        location: selectedLocation,
-        cinema,
-        seats,
-        total,
-        user: currentUser,
-        paymentMethod: data.paymentMethod,
-      },
+      state: { ticketId },
     })
   }
 
@@ -149,12 +174,13 @@ function Checkout() {
                 {...register('paymentMethod')}
               />
             </div>
-            {errors.paymentMethod && <div className="text-wrong-600 mt-2">{errors.paymentMethod.message}</div>}
+            {errors.paymentMethod && (
+              <div className="text-wrong-600 mt-2">{errors.paymentMethod.message}</div>
+            )}
             <Button type="submit" variant="primary" className="w-full mt-8 cursor-pointer">
               Pay Now
             </Button>
           </div>
-          
         </div>
       </form>
       <FooterSection />
