@@ -1,16 +1,18 @@
 function HeroSection() {
   return (
-    <div className="flex flex-col items-center gap-6 text-center">
-      <h3 className="headline-3 rounded-full bg-orange-50 px-4 py-2 text-orange-500">
+    <div className="flex flex-col items-center gap-4 sm:gap-6 md:gap-8 text-center px-4 sm:px-6 md:px-8">
+      <h3 className="font-semibold rounded-full bg-orange-50 px-3 sm:px-4 py-1 sm:py-2 text-orange-500 text-xs sm:text-sm md:text-base lg:text-lg">
         MOVIE TICKET PURCHASES #1 IN INDONESIA
       </h3>
-      <h1 className="headline-1-medium flex flex-col items-center gap-2">
+      <h1 className="font-medium flex flex-col items-center gap-1 sm:gap-2 text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
         Experience the Magic of Cinema:{' '}
-        <span className="text-orange-500 headline-4">Book Your Tickets Today</span>
+        <span className="text-orange-500 font-bold text-2xl sm:text-3xl md:text42xl lg:text-5xl">
+          Book Your Tickets Today
+        </span>
       </h1>
-      <p className="body-1-regular max-w-md text-neutral-500">
+      {/* <p className="font-normal max-w-xs sm:max-w-md md:max-w-lg text-neutral-500 text-xs sm:text-sm md:text-base lg:text-lg">
         Sign up and get the ticket with a lot of discount
-      </p>
+      </p> */}
     </div>
   );
 }
