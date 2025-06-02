@@ -44,16 +44,16 @@ export default function UpcomingMoviesSection() {
   return (
     <div className="flex w-full flex-col items-center gap-6 sm:gap-8 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 py-6 sm:py-8 md:py-10 rounded-2xl sm:rounded-3xl">
       <div className="flex w-full flex-col items-start gap-4 sm:gap-6 max-w-7xl">
-        <div className="w-full flex flex-col md:flex-row items-center md:items-end justify-between ">
-          <div className="flex flex-col items-start gap-4 sm:gap-5 md:gap-6 w-full md:shrink">
-            <h3 className="font-semibold rounded-full bg-orange-50 px-3 sm:px-4 py-1 sm:py-2 text-orange-500 text-xs sm:text-sm md:text-base lg:text-lg">
+        <div className="w-full flex flex-col md:flex-col items-center md:items-center justify-center gap-4 ">
+          <div className="flex flex-col items-center gap-4 sm:gap-5 md:gap-6 w-full md:shrink">
+            {/* <h3 className="font-semibold rounded-full bg-orange-50 px-3 sm:px-4 py-1 sm:py-2 text-orange-500 text-xs sm:text-sm md:text-base lg:text-lg">
               Upcoming Movies
-            </h3>
-            <h1 className="font-bold text-black text-lg md:text-xl lg:text-3xl">
+            </h3> */}
+            <h1 className="font-bold text-black text-lg md:text-2xl lg:text-3xl">
               Exciting Movies Coming Soon
             </h1>
           </div>
-          <div className="flex flex-wrap items-center justify-start md:justify-end gap-2 sm:gap-3 w-full h-full grow">
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 w-full h-full grow">
             {genres.slice(0, 4).map((genre) => (
                <button
               key={genre.id}

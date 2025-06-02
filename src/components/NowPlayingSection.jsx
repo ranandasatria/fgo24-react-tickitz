@@ -40,7 +40,7 @@ export default function NowPlayingSection() {
         >
           <img src="/assets/arrowwhite24.svg" alt="Left Arrow" className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 rotate-180" />
         </button>
-        <h2 className="font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl">
+        <h2 className="font-bold text-md sm:text-xl md:text-2xl lg:text-3xl text-center">
           Now Showing in Cinemas
         </h2>
         <button

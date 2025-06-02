@@ -45,23 +45,29 @@ function MovieDetail() {
   return (
     <>
       <Navbar />
-      <div className="relative mb-8">
+      <div className="relative mb-6 sm:mb-8">
         <div
-          className="px-20 py-10 h-[32.5rem] flex items-end justify-end"
+          className=" px-4 sm:px-6 lg:px-0 py-6 sm:py-8 md:py-10 lg:py-10 h-[16rem] sm:h-[20rem] md:h-[24rem] lg:h-[32.5rem] flex items-end justify-center lg:justify-end rounded-xl lg:rounded-2xl"
           style={{
             backgroundImage: `linear-gradient(180deg, rgba(15,16,13,0.00) 0%, rgba(15,16,13,0.80) 65.1%), url(https://image.tmdb.org/t/p/original${movie?.backdrop_path})`,
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
-            borderRadius: '2rem',
           }}
         >
-          <div className="flex w-[53.1875rem] flex-col justify-end gap-4">
-            <h4 className="headline-4 text-white">{movie?.title}</h4>
-            <p className="body-2-regular text-neutral-50">{movie?.overview}</p>
-            <div className="flex gap-2">
+          <div className="flex w-full flex-col justify-end gap-3 sm:gap-4 z-10 text-center lg:text-left lg:pl-110 lg:pr-10">
+            <h4 className="font-semibold text-white text-xl sm:text-2xl md:text-4xl lg:text-5xl">
+              {movie?.title}
+            </h4>
+            <p className="font-normal text-neutral-50 text-xs sm:text-sm md:text-lg lg:text-xl">
+              {movie?.overview}
+            </p>
+            <div className="flex flex-wrap gap-2 sm:gap-3 justify-center md:justify-start">
               {movieGenre.map((genre, index) => (
-                <Button key={index} className="bg-transparent border border-white">
+                <Button
+                  key={index}
+                  className="bg-transparent border border-white px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm md:text-base text-white"
+                >
                   {genre}
                 </Button>
               ))}
@@ -69,40 +75,48 @@ function MovieDetail() {
           </div>
         </div>
         <img
-          className="absolute top-63 left-20 w-[18.5rem] h-[27.75rem] flex-shrink-0 rounded-2xl"
+          className="lg:absolute w-64 md:w-64 lg:w-[18.5rem] h-96 md:h-96 lg:h-[27.75rem] rounded-xl mx-auto mt-4 lg:top-63 lg:left-20"
           src={`https://image.tmdb.org/t/p/original${movie?.poster_path}`}
           alt={movie?.title}
         />
-        <div className="flex w-[59rem] items-start gap-10 ml-105 mt-4 px-3">
-          <div className="flex flex-col items-start gap-3">
-            <div className="flex flex-col items-start gap-2">
-              <div className="body-1-regular text-black-500">Release Date</div>
-              <div className="headline-3-bold">{movie?.release_date}</div>
+        <div className="flex flex-col lg:flex-row w-full items-start gap-3 mx-auto mt-4 sm:mt-6 md:mt-8 lg:mt-4 px-3 sm:px-4 lg:pl-110 lg:gap-10">
+          <div className="flex flex-col items-start gap-2 sm:gap-3 ">
+            <div className="flex flex-col items-start gap-1 sm:gap-2">
+              <div className="font-normal text-black-500 text-xs sm:text-sm md:text-base">Release Date</div>
+              <div className="font-semibold text-sm sm:text-base md:text-lg lg:text-xl">
+                {movie?.release_date}
+              </div>
             </div>
-            <div className="flex flex-col items-start gap-2">
-              <div className="body-1-regular text-black-500">Duration</div>
-              <div className="headline-3-bold">
+            <div className="flex flex-col items-start gap-1 sm:gap-2">
+              <div className="font-normal text-black-500 text-xs sm:text-sm md:text-base">Duration</div>
+              <div className="font-semibold text-sm sm:text-base md:text-lg lg:text-xl">
                 {movie?.runtime
                   ? `${Math.floor(movie.runtime / 60)} hours ${movie.runtime % 60} minutes`
                   : ''}
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-start gap-3">
-            <div className="flex flex-col items-start gap-2">
-              <div className="body-1-regular text-black-500">Directed By</div>
-              <div className="headline-3-bold">{movie?.director}</div>
+          <div className="flex flex-col items-start gap-2 sm:gap-3 max-w-[70%] lg:pr-10 ">
+            <div className="flex flex-col items-start gap-1 sm:gap-2">
+              <div className="font-normal text-black-500 text-xs sm:text-sm md:text-base">Directed By</div>
+              <div className="font-semibold text-sm sm:text-base md:text-lg lg:text-xl">
+                {movie?.director || 'N/A'}
+              </div>
             </div>
-            <div className="flex flex-col items-start gap-2">
-              <div className="body-1-regular text-black-500">Cast</div>
-              <div className="headline-3-bold">{movie?.cast}</div>
+            <div className="flex flex-col items-start gap-1 sm:gap-2">
+              <div className="font-normal text-black-500 text-xs sm:text-sm md:text-base">Cast</div>
+              <div className="font-semibold text-sm sm:text-base md:text-lg lg:text-xl">
+                {movie?.cast || 'N/A'}
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="flex p-20 flex-col items-start gap-10 self-stretch bg-neutral-100 rounded-4xl mb-8">
-        <div className="flex items-center gap-[3.75rem] w-full justify-between">
-          <h1 className="headline-1-bold text-black-800">Book Tickets</h1>
+      <div className="flex flex-col items-start gap-6 sm:gap-8 md:gap-10 w-full bg-neutral-100 rounded-xl sm:rounded-2xl lg:rounded-4xl mb-6 sm:mb-8 px-4 sm:px-8 md:px-12 lg:px-20 py-6 sm:py-8 md:py-10">
+        <div className="flex flex-row items-start sm:items-center gap-4 sm:gap-6 w-full justify-between">
+          <h1 className="font-bold text-black-800 text-lg sm:text-xl md:text-2xl lg:text-3xl">
+            Book Tickets
+          </h1>
           <Link
             to={isButtonDisabled ? "#" : "/buyticket"}
             state={{
@@ -126,7 +140,7 @@ function MovieDetail() {
             }}
           >
             <button
-              className={`body-2-bold flex items-center justify-center px-5 py-3 rounded-2xl bg-orange-500 text-white ${
+              className={`font-semibold flex items-center justify-center px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-xl sm:rounded-2xl bg-orange-500 text-white text-xs sm:text-sm md:text-base ${
                 isButtonDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-orange-600'
               }`}
             >
@@ -134,12 +148,12 @@ function MovieDetail() {
             </button>
           </Link>
         </div>
-        <div className="flex items-center gap-8 self-stretch ">
-          <div className="flex w-96 flex-col items-start gap-4">
+        <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 md:gap-8 w-full flex-wrap">
+          <div className="flex w-full sm:w-96 max-w-xs sm:max-w-[24rem] flex-col items-start gap-3 sm:gap-4">
             <select
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
-              className="border rounded p-2 w-full"
+              className="border rounded p-2 sm:p-2.5 w-full text-xs sm:text-sm md:text-base"
             >
               <option value="" disabled>
                 Choose Date
@@ -151,11 +165,11 @@ function MovieDetail() {
               ))}
             </select>
           </div>
-          <div className="flex w-96 flex-col items-start gap-4">
+          <div className="flex w-full sm:w-96 max-w-xs sm:max-w-[24rem] flex-col items-start gap-3 sm:gap-4">
             <select
               value={selectedTime}
               onChange={(e) => setSelectedTime(e.target.value)}
-              className="border rounded p-2 w-full"
+              className="border rounded p-2 sm:p-2.5 w-full text-xs sm:text-sm md:text-base"
             >
               <option value="" disabled>
                 Choose Time
@@ -167,11 +181,11 @@ function MovieDetail() {
               ))}
             </select>
           </div>
-          <div className="flex w-96 flex-col items-start gap-4">
+          <div className="flex w-full sm:w-96 max-w-xs sm:max-w-[24rem] flex-col items-start gap-3 sm:gap-4">
             <select
               value={selectedLocation}
               onChange={(e) => setSelectedLocation(e.target.value)}
-              className="border rounded p-2 w-full"
+              className="border rounded p-2 sm:p-2.5 w-full text-xs sm:text-sm md:text-base"
             >
               <option value="" disabled>
                 Choose Location
@@ -184,14 +198,16 @@ function MovieDetail() {
             </select>
           </div>
         </div>
-        <div className="flex flex-col items-start gap-4">
-          <div className="flex items-center gap-4">
-            <label htmlFor="cinema" className="headline-2-bold text-black-500">
+        <div className="flex flex-col items-start gap-4 sm:gap-6 w-full">
+          <div className="flex items-center gap-4 sm:gap-6">
+            <label htmlFor="cinema" className="font-semibold text-black-500 text-base sm:text-lg md:text-xl">
               Choose Cinema
             </label>
-            <div className="body-1-regular text-black-500">{cinemas.length} Results</div>
+            <div className="font-normal text-black-500 text-xs sm:text-sm md:text-base">
+              {cinemas.length} Results
+            </div>
           </div>
-          <div className="flex items-center gap-8">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 md:gap-8 flex-wrap">
             {cinemas.map((cinema) => (
               <InputRadio
                 key={cinema.id}
