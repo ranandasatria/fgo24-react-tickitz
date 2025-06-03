@@ -76,7 +76,7 @@ function MovieDetail() {
         </div>
         <img
           className="lg:absolute w-64 md:w-64 lg:w-[18.5rem] h-96 md:h-96 lg:h-[27.75rem] rounded-xl mx-auto mt-4 lg:top-63 lg:left-20"
-          src={`https://image.tmdb.org/t/p/original${movie?.poster_path}`}
+          src={`https://image.tmdb.org/t/p/w500${movie?.poster_path}`}
           alt={movie?.title}
         />
         <div className="flex flex-col lg:flex-row w-full items-start gap-3 mx-auto mt-4 sm:mt-6 md:mt-8 lg:mt-4 px-3 sm:px-4 lg:pl-110 lg:gap-10">
@@ -148,7 +148,7 @@ function MovieDetail() {
             </button>
           </Link>
         </div>
-        <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 md:gap-8 w-full flex-wrap">
+        <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 w-full ">
           <div className="flex w-full sm:w-96 max-w-xs sm:max-w-[24rem] flex-col items-start gap-3 sm:gap-4">
             <select
               value={selectedDate}

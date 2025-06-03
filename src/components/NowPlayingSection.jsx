@@ -67,7 +67,7 @@ export default function NowPlayingSection() {
             <div className="flex h-[200px] sm:h-[240px] md:h-[280px] lg:h-[328px] flex-col items-center justify-center">
               <img
                 className="h-full w-full rounded-xl sm:rounded-2xl object-cover"
-                src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 alt={movie.title}
               />
             </div>

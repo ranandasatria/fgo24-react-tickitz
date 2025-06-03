@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addUsersAction } from '../redux/reducers/users';
 import IconRound from '../components/Icon';
-import { Checkbox, InputNormal } from '../components/InputStyle';
+import { Checkbox, InputNormal, InputPassword } from '../components/InputStyle';
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
@@ -13,7 +13,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 function SignUp() {
-
   const users = useSelector((state) => state.users.users)
   useEffect(() => {
     console.log('Users:', users)
@@ -35,7 +34,6 @@ function SignUp() {
     },
   })
 
-  
   const [error, setError] = useState('')
 
   const dispatch = useDispatch()
@@ -63,26 +61,29 @@ function SignUp() {
   }
 
   return (
-    <div className="w-full h-screen flex items-center justify-center bg-center bg-black/30 bg-[url('/assets/witfh.png')] bg-blend-multiply">
-      <div className="bg-white/80 flex flex-col h-full w-[35rem] items-center justify-center px-24 rounded-2xl gap-3">
-        <img src="/assets/tickitznav.svg" alt="Tickitz Logo" />
-        <div className="flex gap-4 items-center justify-center">
-          <div className="flex flex-col justify-center items-center gap-2">
-            <IconRound variant="primary">1</IconRound>
-            <p className="body-3-medium text-black-600">Fill Form</p>
-          </div>
-          <div className="w-20 border border-dashed border-neutral-500"></div>
-          <div className="flex flex-col justify-center items-center gap-2">
-            <IconRound variant="secondary">2</IconRound>
-            <p className="body-3-medium text-neutral-400">Activate</p>
-          </div>
-          <div className="w-20 border border-dashed border-neutral-500"></div>
-          <div className="flex flex-col justify-center items-center gap-2">
-            <IconRound variant="secondary">3</IconRound>
-            <p className="body-3-medium text-neutral-400">Done</p>
-          </div>
+    <div className="w-full min-h-screen flex items-center justify-center bg-center bg-black/30 bg-[url('/assets/witfh.png')] bg-blend-multiply">
+      <div className="bg-white/80 flex flex-col w-full max-w-[22rem] sm:max-w-[28rem] md:max-w-[35rem] min-h-[90vh] sm:min-h-[80vh] items-center justify-center px-4 sm:px-8 md:px-24 py-6 rounded-2xl gap-3 sm:gap-4">
+        <img src="/assets/tickitznav.svg" alt="Tickitz Logo" className="w-24 sm:w-28 md:w-32" />
+         <div className="flex flex-col gap-2 justify-start w-full">
+          <h1 className="font-bold text-xl sm:text-2xl md:text-3xl text-black-500">Sign up</h1>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full gap-3">
+        {/* <div className="flex gap-2 sm:gap-4 items-center justify-center">
+          <div className="flex flex-col justify-center items-center gap-1 sm:gap-2">
+            <IconRound variant="primary">1</IconRound>
+            <p className="body-3-medium text-black-600 text-xs sm:text-sm">Fill Form</p>
+          </div>
+          <div className="w-10 sm:w-15 border border-dashed border-neutral-500"></div>
+          <div className="flex flex-col justify-center items-center gap-1 sm:gap-2">
+            <IconRound variant="secondary">2</IconRound>
+            <p className="body-3-medium text-neutral-400 text-xs sm:text-sm">Activate</p>
+          </div>
+          <div className="w-10 sm:w-15 border border-dashed border-neutral-500"></div>
+          <div className="flex flex-col justify-center items-center gap-1 sm:gap-2">
+            <IconRound variant="secondary">3</IconRound>
+            <p className="body-3-medium text-neutral-400 text-xs sm:text-sm">Done</p>
+          </div>
+        </div> */}
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full gap-3 sm:gap-4">
           <InputNormal
             label="Email"
             type="email"
@@ -90,45 +91,44 @@ function SignUp() {
             placeholder="Enter your email"
             {...register('email')}
           />
-          {errors.email && <div className="text-wrong-600">{errors.email.message}</div>}
-          {error && <div className="text-wrong-600">{error}</div>}
-          <InputNormal
+          {errors.email && <div className="text-wrong-600 text-sm sm:text-base">{errors.email.message}</div>}
+          {error && <div className="text-wrong-600 text-sm sm:text-base">{error}</div>}
+          <InputPassword
             label="Password"
-            type="password"
             id="password"
             placeholder="Enter your password"
             {...register('password')}
           />
-          {errors.password && <div className="text-wrong-600">{errors.password.message}</div>}
+          {errors.password && <div className="text-wrong-600 text-sm sm:text-base">{errors.password.message}</div>}
           <Checkbox
             label="I agree to terms and conditions"
             id="terms"
             {...register('terms')}
           />
-          {errors.terms && <div className="text-wrong-600">{errors.terms.message}</div>}
-          <Button type="submit" className='cursor-pointer'>
+          {errors.terms && <div className="text-wrong-600 text-sm sm:text-base">{errors.terms.message}</div>}
+          <Button type="submit">
             Join for Free Now
           </Button>
         </form>
-        <p className="body-1-medium text-black-400">
+        <p className="font-medium text-black-400 text-sm ">
           Already have an Account?{' '}
-          <Link to="/login" className="underline body-1-medium text-blue-600">
+          <Link to="/login" className="underline text-blue-600">
             Login
           </Link>
         </p>
         <div className="flex items-center w-full">
           <div className="border w-full border-black-100"></div>
-          <span className="mx-4 text-black-100">Or</span>
+          <span className="mx-2 sm:mx-4 text-black-200 text-sm">Or</span>
           <div className="border w-full border-black-100"></div>
         </div>
-        <div className="flex gap-2 items-center justify-evenly w-full">
-          <Link to="https://google.com" className="flex items-center justify-center gap-4 bg-white px-5 py-3 rounded-2xl shadow-lg hover:bg-orange-50 cursor-pointer">
-            <FcGoogle className="text-xl" />
-            <p className="body-1-semibold text-neutral-300">Google</p>
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 items-center justify-evenly w-full">
+          <Link to="https://google.com" className="flex items-center justify-center gap-2 sm:gap-4 bg-white px-3 sm:px-5 py-2 sm:py-3 rounded-2xl shadow-lg hover:bg-orange-50 cursor-pointer w-full sm:w-auto">
+            <FcGoogle className="text-lg sm:text-xl" />
+            <p className=" font-medium text-neutral-300 text-sm sm:text-base">Google</p>
           </Link>
-          <Link to="https://facebook.com" className="flex items-center justify-center gap-4 bg-white px-5 py-3 rounded-2xl shadow-lg hover:bg-orange-50 cursor-pointer">
-            <FaFacebook className="text-blue-950 text-xl" />
-            <p className="body-1-semibold text-neutral-300">Facebook</p>
+          <Link to="https://facebook.com" className="flex items-center justify-center gap-2 sm:gap-4 bg-white px-3 sm:px-5 py-2 sm:py-3 rounded-2xl shadow-lg hover:bg-orange-50 cursor-pointer w-full sm:w-auto">
+            <FaFacebook className="text-blue-950 text-lg sm:text-xl" />
+            <p className=" font-medium text-neutral-300 text-sm sm:text-base">Facebook</p>
           </Link>
         </div>
       </div>
