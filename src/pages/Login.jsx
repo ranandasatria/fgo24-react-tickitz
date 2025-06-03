@@ -12,6 +12,7 @@ import { FaFacebook } from 'react-icons/fa';
 import LinkButton from '../components/LinkButton';
 import { loginAction } from '../redux/reducers/auth';
 import { InputPassword } from '../components/InputStyle';
+import toast from 'react-hot-toast';
 
 function Login() {
   const validationSchema = yup.object({
@@ -42,7 +43,12 @@ function Login() {
     if (user) {
       setError('');
       dispatch(loginAction({ email: user.email, id: user.id, name: user.name || user.email.split('@')[0]}));
-      console.log('Navigating to home');
+      toast.success('Login success!', {
+      style: {
+        background: '#4ade80',
+        color: '#fff',
+      },
+    }),
       navigate('/');
     } else {
       setError('Wrong email or password');

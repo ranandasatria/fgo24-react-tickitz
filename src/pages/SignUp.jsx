@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addUsersAction } from '../redux/reducers/users';
-import IconRound from '../components/Icon';
 import { Checkbox, InputNormal, InputPassword } from '../components/InputStyle';
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
@@ -11,12 +10,13 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import toast from 'react-hot-toast';
+
+
 
 function SignUp() {
   const users = useSelector((state) => state.users.users)
-  useEffect(() => {
-    console.log('Users:', users)
-  }, [users])
+
 
   const validationSchema = yup.object({
     email: yup.string().trim().email('Invalid email.').required('Email is required.'),
@@ -53,7 +53,12 @@ function SignUp() {
     if (!isRegistered(sanitizedValue.email, users)) {
       setError('')
       dispatch(addUsersAction(sanitizedValue))
-      console.log('Navigating to login')
+      toast.success('Thank you for signing up!', {
+      style: {
+        background: '#4ade80',
+        color: '#fff',
+      },
+    }),
       navigate('/login')
     } else {
       setError('Email registered, please login.')
