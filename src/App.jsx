@@ -4,6 +4,7 @@ import MoviePage from './pages/MoviePage';
 import MovieDetail from './pages/MovieDetail';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
+import ForgotPassword from './pages/ForgotPassword'
 import BuyTicket from './pages/BuyTicket';
 import Checkout from './pages/Checkout';
 import Ticket from './pages/Ticket';
@@ -11,6 +12,7 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistor, store } from './redux/store'
 import Profile from './pages/Profile';
+
 
 
 const router = createBrowserRouter([
@@ -33,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />
+  },
+  {
+    path: '/forgotpassword',
+    element: <ForgotPassword />
   },
   {
     path: '/buyticket',
