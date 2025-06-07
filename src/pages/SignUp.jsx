@@ -12,11 +12,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import toast from 'react-hot-toast';
 
-
-
 function SignUp() {
   const users = useSelector((state) => state.users.users)
-
 
   const validationSchema = yup.object({
     email: yup.string().trim().email('Invalid email.').required('Email is required.'),
@@ -30,12 +27,10 @@ function SignUp() {
       email: '',
       password: '',
       terms: false,
-      phone: ''
     },
   })
 
   const [error, setError] = useState('')
-
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -48,17 +43,14 @@ function SignUp() {
       ...value,
       password: btoa(value.password),
       email: value.email.trim(),
-      phone: ''
+      phone: '',
     }
     if (!isRegistered(sanitizedValue.email, users)) {
       setError('')
       dispatch(addUsersAction(sanitizedValue))
       toast.success('Thank you for signing up!', {
-      style: {
-        background: '#4ade80',
-        color: '#fff',
-      },
-    }),
+        style: { background: '#4ade80', color: '#fff' },
+      })
       navigate('/login')
     } else {
       setError('Email registered, please login.')
@@ -69,25 +61,9 @@ function SignUp() {
     <div className="w-full min-h-screen flex items-center justify-center bg-center bg-black/30 bg-[url('/assets/witfh.png')] bg-blend-multiply">
       <div className="bg-white/80 flex flex-col w-full max-w-[22rem] sm:max-w-[28rem] md:max-w-[35rem] min-h-[90vh] sm:min-h-[80vh] items-center justify-center px-4 sm:px-8 md:px-24 py-6 rounded-2xl gap-3 sm:gap-4">
         <img src="/assets/tickitznav.svg" alt="Tickitz Logo" className="w-24 sm:w-28 md:w-32" />
-         <div className="flex flex-col gap-2 justify-start w-full">
+        <div className="flex flex-col gap-2 justify-start w-full">
           <h1 className="font-bold text-xl sm:text-2xl md:text-3xl text-black-500">Sign up</h1>
         </div>
-        {/* <div className="flex gap-2 sm:gap-4 items-center justify-center">
-          <div className="flex flex-col justify-center items-center gap-1 sm:gap-2">
-            <IconRound variant="primary">1</IconRound>
-            <p className="body-3-medium text-black-600 text-xs sm:text-sm">Fill Form</p>
-          </div>
-          <div className="w-10 sm:w-15 border border-dashed border-neutral-500"></div>
-          <div className="flex flex-col justify-center items-center gap-1 sm:gap-2">
-            <IconRound variant="secondary">2</IconRound>
-            <p className="body-3-medium text-neutral-400 text-xs sm:text-sm">Activate</p>
-          </div>
-          <div className="w-10 sm:w-15 border border-dashed border-neutral-500"></div>
-          <div className="flex flex-col justify-center items-center gap-1 sm:gap-2">
-            <IconRound variant="secondary">3</IconRound>
-            <p className="body-3-medium text-neutral-400 text-xs sm:text-sm">Done</p>
-          </div>
-        </div> */}
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full gap-3 sm:gap-4">
           <InputNormal
             label="Email"
@@ -111,15 +87,11 @@ function SignUp() {
             {...register('terms')}
           />
           {errors.terms && <div className="text-wrong-600 text-sm sm:text-base">{errors.terms.message}</div>}
-          <Button type="submit">
-            Join for Free Now
-          </Button>
+          <Button type="submit">Join for Free Now</Button>
         </form>
-        <p className="font-medium text-black-400 text-sm ">
-          Already have an Account?{' '}
-          <Link to="/login" className="underline text-blue-600">
-            Login
-          </Link>
+        <p className="font-medium text-black-400 text-sm">
+          Already have an account?{' '}
+          <Link to="/login" className="underline text-blue-600">Login</Link>
         </p>
         <div className="flex items-center w-full">
           <div className="border w-full border-black-100"></div>
@@ -129,16 +101,16 @@ function SignUp() {
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 items-center justify-evenly w-full">
           <Link to="https://google.com" className="flex items-center justify-center gap-2 sm:gap-4 bg-white px-3 sm:px-5 py-2 sm:py-3 rounded-2xl shadow-lg hover:bg-orange-50 cursor-pointer w-full sm:w-auto">
             <FcGoogle className="text-lg sm:text-xl" />
-            <p className=" font-medium text-neutral-300 text-sm sm:text-base">Google</p>
+            <p className="font-medium text-neutral-300 text-sm sm:text-base">Google</p>
           </Link>
           <Link to="https://facebook.com" className="flex items-center justify-center gap-2 sm:gap-4 bg-white px-3 sm:px-5 py-2 sm:py-3 rounded-2xl shadow-lg hover:bg-orange-50 cursor-pointer w-full sm:w-auto">
             <FaFacebook className="text-blue-950 text-lg sm:text-xl" />
-            <p className=" font-medium text-neutral-300 text-sm sm:text-base">Facebook</p>
+            <p className="font-medium text-neutral-300 text-sm sm:text-base">Facebook</p>
           </Link>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 export default SignUp;
