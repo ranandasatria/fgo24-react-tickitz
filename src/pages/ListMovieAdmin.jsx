@@ -103,13 +103,13 @@ function ListMovieAdmin() {
                 disabled={currentPage === 1}
                 className={`w-10 h-10 flex items-center justify-center rounded-full ${currentPage === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
               >
-                &lt
+              <img src="/assets/arrowwhite24.svg" alt="Left Arrow" className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 rotate-180" />
               </button>
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                 <button
                   key={page}
                   onClick={() => handlePageChange(page)}
-                  className={`w-10 h-10 flex items-center justify-center rounded-full ${currentPage === page ? 'bg-blue-500 text-white' : 'border border-gray-300 hover:bg-gray-50'}`}
+                  className={`w-10 h-10 flex items-center justify-center rounded-full ${currentPage === page ? 'bg-orange-500 text-white' : 'border border-gray-300 hover:bg-gray-50'}`}
                 >
                   {page}
                 </button>
@@ -119,7 +119,7 @@ function ListMovieAdmin() {
                 disabled={currentPage === totalPages}
                 className={`w-10 h-10 flex items-center justify-center rounded-full ${currentPage === totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
               >
-                &gt
+               <img src="/assets/arrowwhite24.svg" alt="Right Arrow" className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
               </button>
             </div>
           )}
