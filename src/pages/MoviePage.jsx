@@ -4,19 +4,25 @@ import Button from '../components/Button';
 import NewsletterSection from '../components/NewsletterSection';
 import FooterSection from '../components/FooterSection';
 import ListMovie from '../components/ListMovie';
+import { useSelector } from 'react-redux';
+import FetchMovieAPI from '../components/FetchMovie';
 
 function MoviePage() {
-  const [sortOption, setSortOption] = useState('popular');
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [sortOption, setSortOption] = useState('popular')
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const { movies } = FetchMovieAPI() || { movies: [] }
+  const localMovies = useSelector((state) => state.movies.localMovies) || []
 
   const toggleDropdown = () => {
-    setIsDropdownOpen((prev) => !prev);
-  };
+    setIsDropdownOpen((prev) => !prev)
+  }
 
   const handleSortSelect = (option) => {
-    setSortOption(option);
-    setIsDropdownOpen(false);
-  };
+    setSortOption(option)
+    setIsDropdownOpen(false)
+  }
+
+  const allMovies = [...(movies || []), ...(localMovies || [])]
 
   return (
     <>
@@ -43,7 +49,7 @@ function MoviePage() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center self-stretch px-4 sm:px-6 md:px-8 lg:px-20 py-6 sm:py-8 md:py-10 gap-3 sm:gap-0 gap-0">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center self-stretch px-4 sm:px-6 md:px-8 lg:px-20 py-6 sm:py-8 md:py-10 gap-3 sm:gap-0">
         <h1 className="font-black text-3xl  md:text-4xl lg:text-[4rem] leading-tight sm:leading-[3rem] md:leading-[4rem] lg:leading-[4.75rem] text-black-500">
           Now Showing in Cinemas
         </h1>
@@ -86,11 +92,11 @@ function MoviePage() {
           )}
         </div>
       </div>
-      <ListMovie sortOption={sortOption} />
+      <ListMovie sortOption={sortOption} movies={allMovies} />
       <NewsletterSection />
       <FooterSection />
     </>
-  );
+  )
 }
 
 export default MoviePage;

@@ -40,8 +40,8 @@ function BuyTicket() {
     }
     navigate('/checkout', {
       state: {
-        movie,
-        genres,
+        movie: displayMovie,
+        genres: displayGenres,
         date,
         time,
         selectedLocation,
@@ -53,17 +53,22 @@ function BuyTicket() {
   }
 
   const displayMovie = movie || fallbackMovie
+  // const isLocalMovie = displayMovie.movieTitle || (displayMovie.id && displayMovie.id > 1000000000000)
+  
   const displayMovieWithPoster = {
     ...displayMovie,
-    poster_path: displayMovie.poster_path?.startsWith('/assets')
+    title: displayMovie.title || displayMovie.movieTitle,
+    poster_path: displayMovie.poster_path?.startsWith('/assets') || displayMovie.poster_path?.startsWith('data:image/')
       ? displayMovie.poster_path
-      : `https://image.tmdb.org/t/p/original${displayMovie.poster_path}`,
+      : displayMovie.poster_path
+      ? `https://image.tmdb.org/t/p/original${displayMovie.poster_path}`
+      : '/assets/imageplaceholder.png',
   }
+  
   const displayGenres = genres || fallbackGenres
   const displayDate = date || 'Wednesday, 21 May, 2025'
   const displayTime = time || '11:35 PM'
   const displayCinema = cinema || 'CineOne21'
-
 
   return (
     <>
@@ -94,7 +99,7 @@ function BuyTicket() {
         <div className="flex-1 border rounded-xl shadow p-6">
           <SummaryCard
             cinema={displayCinema}
-            movieTitle={displayMovie.title}
+            movieTitle={displayMovieWithPoster.title}
             date={displayDate}
             time={displayTime}
             ticketPrice={10}

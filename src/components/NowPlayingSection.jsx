@@ -1,15 +1,25 @@
-import FetchMovieAPI from './FetchMovie';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Button from './Button';
 import GenreTag from './GenreTag';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import FetchMovieAPI from './FetchMovie';
 
 export default function NowPlayingSection() {
-  const { movies, genres } = FetchMovieAPI()
+  const { movies: fetchedMovies, genres } = FetchMovieAPI() || { movies: [], genres: [] }
+  const localMovies = useSelector((state) => state.movies.localMovies) || []
   const scrollRef = useRef(null)
   const [scrollPosition, setScrollPosition] = useState(0)
   const [isAtStart, setIsAtStart] = useState(true)
   const [isAtEnd, setIsAtEnd] = useState(false)
+  const [allMovies, setAllMovies] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const combinedMovies = [...(fetchedMovies || []), ...(localMovies || [])]
+    setAllMovies(combinedMovies)
+    setIsLoading(false)
+  }, [fetchedMovies, localMovies])
 
   const scrollLeft = () => {
     scrollRef.current.scrollBy({ left: -200, behavior: 'smooth' })
@@ -26,6 +36,10 @@ export default function NowPlayingSection() {
     setScrollPosition(position)
     setIsAtStart(scrollLeft === 0)
     setIsAtEnd(scrollLeft + clientWidth >= scrollWidth - 1)
+  }
+
+  if (isLoading) {
+    return <div className="text-center py-8 text-gray-600">Loading movies...</div>
   }
 
   return (
@@ -58,28 +72,41 @@ export default function NowPlayingSection() {
         onScroll={handleScroll}
         className="flex w-full overflow-x-auto gap-4 sm:gap-6 scroll-smooth hide-scrollbar"
       >
-        {movies.map((movie) => (
-          <Link
-            key={movie.id}
-            to={`/movie/${movie.id}`}
-            className="flex w-48 sm:w-56 md:w-64 flex-col items-center justify-start gap-3 sm:gap-4 md:gap-5 flex-shrink-0"
-          >
-            <div className="flex h-[200px] sm:h-[240px] md:h-[280px] lg:h-[328px] flex-col items-center justify-center">
-              <img
-                className="h-full w-full rounded-xl sm:rounded-2xl object-cover"
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
-              />
-            </div>
-            <GenreTag movieGenreIds={movie.genre_ids} genres={genres} />
-            <h4
-              className="font-extrabold text-center uppercase text-clip text-xs sm:text-sm md:text-base lg:text-lg"
-              title={movie.title}
+        {Array.isArray(allMovies) && allMovies.length > 0 ? (
+          allMovies.map((movie) => (
+            <Link
+              key={movie.id}
+              to={`/movie/${movie.id}`}
+              className="flex w-48 sm:w-56 md:w-64 flex-col items-center justify-start gap-3 sm:gap-4 md:gap-5 flex-shrink-0"
             >
-              {movie.title.length > 24 ? `${movie.title.slice(0, 24)}...` : movie.title}
-            </h4>
-          </Link>
-        ))}
+              <div className="flex h-[200px] sm:h-[240px] md:h-[280px] lg:h-[328px] flex-col items-center justify-center">
+                <img
+                  className="h-full w-full rounded-xl sm:rounded-2xl object-cover"
+                  src={
+                    movie.poster_path
+                      ? movie.poster_path.startsWith('data:image/')
+                        ? movie.poster_path
+                        : `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                      : '/assets/imageplaceholder.png'
+                  }
+                  alt={movie.title || movie.movieTitle}
+                  onError={(e) => {
+                    e.target.src = '/assets/imageplaceholder.png'
+                  }}
+                />
+              </div>
+              <GenreTag movieGenreIds={movie.genre_ids || []} genres={genres} />
+              <h4
+                className="font-extrabold text-center uppercase text-clip text-xs sm:text-sm md:text-base lg:text-lg"
+                title={movie.title || movie.movieTitle}
+              >
+                {(movie.title || movie.movieTitle).length > 24 ? `${(movie.title || movie.movieTitle).slice(0, 24)}...` : movie.title || movie.movieTitle}
+              </h4>
+            </Link>
+          ))
+        ) : (
+          <div className="text-center w-full py-4 text-gray-600">No movies available.</div>
+        )}
       </div>
       <div className="slider w-full h-2 sm:h-2.5 md:h-3 bg-gray-700 rounded-xl sm:rounded-2xl overflow-hidden">
         <div

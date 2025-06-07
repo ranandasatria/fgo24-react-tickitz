@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import FetchMovieAPI from './FetchMovie';
 import GenreTag from './GenreTag';
+import { useSelector } from 'react-redux';
 
-function ListMovie({ sortOption }) {
-  const { movies, genres } = FetchMovieAPI()
+function ListMovie({ sortOption, movies: propMovies }) {
+  const { movies: fetchedMovies, genres } = FetchMovieAPI() || { movies: [], genres: [] }
+  const localMovies = useSelector((state) => state.movies.localMovies) || []
+  
+  const baseMovies = propMovies || [...(fetchedMovies || []), ...(localMovies || [])]
+
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedGenres, setSelectedGenres] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
@@ -30,25 +35,31 @@ function ListMovie({ sortOption }) {
     setCurrentPage(1)
   }
 
-  const filteredMovies = movies
+  const filteredMovies = baseMovies
     .filter((movie) => {
-      const matchesSearch = movie.title
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase())
+      const title = movie.title || movie.movieTitle || ''
+      const matchesSearch = title.toLowerCase().includes(searchQuery.toLowerCase())
       const matchesGenres =
         selectedGenres.length === 0 ||
-        selectedGenres.every((genreId) => movie.genre_ids.includes(genreId))
+        selectedGenres.every((genreId) => (movie.genre_ids || []).includes(genreId))
       return matchesSearch && matchesGenres
     })
     .sort((a, b) => {
+      const aTitle = a.title || a.movieTitle || ''
+      const bTitle = b.title || b.movieTitle || ''
+      const aDate = new Date(a.release_date || a.releaseDate || '1970-01-01')
+      const bDate = new Date(b.release_date || b.releaseDate || '1970-01-01')
+      const aVote = a.vote_average || 0
+      const bVote = b.vote_average || 0
+
       if (sortOption === 'Popular') {
-        return b.vote_average - a.vote_average
+        return bVote - aVote
       } else if (sortOption === 'Latest') {
-        return new Date(b.release_date) - new Date(a.release_date)
+        return bDate - aDate
       } else if (sortOption === 'Name (A-Z)') {
-        return a.title.localeCompare(b.title)
+        return aTitle.localeCompare(bTitle)
       } else if (sortOption === 'Name (Z-A)') {
-        return b.title.localeCompare(a.title)
+        return bTitle.localeCompare(aTitle)
       }
       return 0
     })
@@ -101,7 +112,7 @@ function ListMovie({ sortOption }) {
           )}
         </div>
       </div>
-      {movies.length === 0 && genres.length === 0 ? (
+      {baseMovies.length === 0 && genres.length === 0 ? (
         <div className="text-center text-gray-600 py-8 sm:py-10 text-xs sm:text-sm md:text-base">
           Loading movies...
         </div>
@@ -119,20 +130,29 @@ function ListMovie({ sortOption }) {
                 className="flex flex-col items-center justify-center gap-3 sm:gap-4 flex-shrink-0 group mb-4 rounded"
               >
                 <div className="h-[20rem] sm:h-[22rem] md:h-[24rem] relative">
-                  {movie.vote_average > 7.0 && (
+                  {(movie.vote_average || 0) > 7.0 && (
                     <span className="absolute top-1 sm:top-1 left-1 sm:left-2 bg-green-50 text-orange-500 text-xs sm:text-sm font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded z-10 hidden group-hover:block">
                       Recommended
                     </span>
                   )}
                   <img
                     className="w-full h-full rounded-xl sm:rounded-2xl object-cover hover:scale-105"
-                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                    alt={movie.title}
+                    src={
+                    movie.poster_path
+                      ? movie.poster_path.startsWith('data:image/')
+                        ? movie.poster_path
+                        : `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                      : '/assets/imageplaceholder.png'
+                  }
+                  alt={movie.title || movie.movieTitle}
+                  onError={(e) => {
+                    e.target.src = '/assets/imageplaceholder.png'
+                  }}
                   />
                 </div>
-                <GenreTag movieGenreIds={movie.genre_ids} genres={genres} />
+                <GenreTag movieGenreIds={movie.genre_ids || []} genres={genres} />
                 <h4 className="text-sm sm:text-base md:text-lg font-semibold text-center uppercase text-clip">
-                  {movie.title.length > 24 ? `${movie.title.slice(0, 24)}...` : movie.title}
+                  {(movie.title || movie.movieTitle).length > 24 ? `${(movie.title || movie.movieTitle).slice(0, 24)}...` : movie.title || movie.movieTitle}
                 </h4>
               </Link>
             ))}
@@ -166,7 +186,7 @@ function ListMovie({ sortOption }) {
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className={`flex h-8 w-8 sm:h-10 sm:w-10 md:h-[3.375rem] md:w-[3.375rem] items-center justify-center rounded-full bg-orange-500  ${
+                className={`flex h-8 w-8 sm:h-10 sm:w-10 md:h-[3.375rem] md:w-[3.375rem] items-center justify-center rounded-full bg-orange-500 ${
                   currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
                 }`}
               >
