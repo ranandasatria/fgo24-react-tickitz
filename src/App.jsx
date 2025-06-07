@@ -4,16 +4,28 @@ import MoviePage from './pages/MoviePage';
 import MovieDetail from './pages/MovieDetail';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
-import ForgotPassword from './pages/ForgotPassword'
+import ForgotPassword from './pages/ForgotPassword';
 import BuyTicket from './pages/BuyTicket';
 import Checkout from './pages/Checkout';
 import Ticket from './pages/Ticket';
-import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
-import { persistor, store } from './redux/store'
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistor, store } from './redux/store';
 import Profile from './pages/Profile';
+import AddMovie from './pages/AddMovie';
+import ListMovieAdmin from './pages/ListMovieAdmin';
+import { useSelector } from 'react-redux';
 
-
+const ProtectedRoute = ({ element, allowedRoles }) => {
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  if (!currentUser) {
+    return <div>Unauthorized - Please log in</div>;
+  }
+  if (allowedRoles && !allowedRoles.includes(currentUser.role)) {
+    return <div>Unauthorized - Admin access required</div>;
+  }
+  return element;
+};
 
 const router = createBrowserRouter([
   {
@@ -55,16 +67,28 @@ const router = createBrowserRouter([
   {
     path: '/profile',
     element: <Profile />
+  },
+  {
+    path: '/dashboard',
+    element: <ProtectedRoute element={<div>Dashboard Placeholder</div>} allowedRoles={['admin']} />
+  },
+  {
+    path: '/listmovie',
+    element: <ProtectedRoute element={<ListMovieAdmin />} allowedRoles={['admin']} />
+  },
+  {
+    path: '/addmovie',
+    element: <ProtectedRoute element={<AddMovie />} allowedRoles={['admin']} />
   }
 ]);
 
 function App() {
   return (
-  <Provider store={store}>
-    <PersistGate persistor={persistor}>
-      <RouterProvider router={router} />
-    </PersistGate>
-  </Provider>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <RouterProvider router={router} />
+      </PersistGate>
+    </Provider>
   )
 }
 

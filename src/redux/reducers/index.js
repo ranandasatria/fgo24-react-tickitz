@@ -3,7 +3,8 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import users from './users';
 import auth from './auth';
-import bookedTicket from './bookedTicket'
+import bookedTicket from './bookedTicket';
+import movies from './movies';
 
 const usersPersistConfig = {
   key: 'users',
@@ -20,10 +21,16 @@ const bookedTicketPersistConfig = {
   storage,
 };
 
+const moviesPersistConfig = {
+  key: 'movies',
+  storage,
+};
+
 const reducer = combineReducers({
   users: persistReducer(usersPersistConfig, users),
   auth: persistReducer(authPersistConfig, auth),
-  bookedTicket: persistReducer(bookedTicketPersistConfig, bookedTicket)
+  bookedTicket: persistReducer(bookedTicketPersistConfig, bookedTicket),
+  movies: persistReducer(moviesPersistConfig, movies),
 });
 
 export default reducer;
