@@ -96,7 +96,7 @@ function AddMovie() {
                 <img
                   src={imagePreview}
                   alt="Preview"
-                  className="mt-4 w-32 h-32 object-cover rounded-lg border border-gray-200"
+                  className="mt-4 w-32 h-32 object-cover rounded-lg border-gray-200"
                 />
               )}
             </div>

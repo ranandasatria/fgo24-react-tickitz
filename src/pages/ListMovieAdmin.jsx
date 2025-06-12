@@ -26,6 +26,13 @@ function ListMovieAdmin() {
     setCurrentPage(page)
   }
 
+  // Fungsi untuk memformat tanggal dari yyyy-mm-dd ke dd/mm/yyyy
+  const formatDate = (dateString) => {
+    if (!dateString) return 'N/A'
+    const [year, month, day] = dateString.split('T')[0].split('-')
+    return `${day}/${month}/${year}`
+  }
+
   return (
     <>
       <NavbarAdmin />
@@ -66,7 +73,7 @@ function ListMovieAdmin() {
                       </td>
                       <td className="p-2 sm:p-3 border-b align-middle">{movie.movieTitle}</td>
                       <td className="p-2 sm:p-3 border-b align-middle">{movie.category}</td>
-                      <td className="p-2 sm:p-3 border-b align-middle">{new Date(movie.releaseDate).toLocaleDateString()}</td>
+                      <td className="p-2 sm:p-3 border-b align-middle">{formatDate(movie.releaseDate)}</td>
                       <td className="p-2 sm:p-3 border-b align-middle">{movie.duration}</td>
                       <td className="p-2 sm:p-3 border-b align-middle">
                         <div className="flex items-center justify-center gap-2">
@@ -109,7 +116,7 @@ function ListMovieAdmin() {
                 <button
                   key={page}
                   onClick={() => handlePageChange(page)}
-                  className={`w-10 h-10 flex items-center justify-center rounded-full ${currentPage === page ? 'bg-orange-500 text-white' : 'border border-gray-300 hover:bg-gray-50'}`}
+                  className={`w-10 h-10 flex items-center justify-center rounded-full ${currentPage === page ? 'bg-primary-500 text-white' : 'border border-gray-300 hover:bg-gray-50'}`}
                 >
                   {page}
                 </button>
