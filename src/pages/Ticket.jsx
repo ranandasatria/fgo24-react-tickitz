@@ -67,7 +67,7 @@ function Ticket() {
         <div className="flex gap-4 items-center justify-center my-8 px-4">
           <div className="flex flex-col justify-center items-center gap-2">
             <IconRound variant="done">✓</IconRound>
-            <p className="body-3-medium text-black-600">Dates & time</p>
+            <p className="body-3-medium text-black-600">Movie</p>
           </div>
           <div className="w-12 sm:w-20 border border-dashed border-neutral-500" />
           <div className="flex flex-col justify-center items-center gap-2">
