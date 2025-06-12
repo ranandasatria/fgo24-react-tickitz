@@ -27,7 +27,7 @@ function NavbarAdmin() {
     <div className="flex w-full">
       <nav className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-2 sm:py-3 md:px-6">
         <NavLink to="/" end>
-          <img src="/assets/tickitznav.svg" alt="Tickitz Logo" className="h-6 sm:h-8 md:h-10" />
+          <img src="/assets/tontrix-high-resolution-logo-transparent.png" alt="Tontrix Logo" className="h-6 sm:h-8 md:h-10" />
         </NavLink>
         <div className="hidden gap-6 md:gap-8 md:flex">
           <NavLink
@@ -44,7 +44,7 @@ function NavbarAdmin() {
                 Dashboard
                 <div
                   className={`h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full ${
-                    isActive ? 'bg-orange-500' : 'bg-transparent'
+                    isActive ? 'bg-primary-500' : 'bg-transparent'
                   }`}
                 />
               </>
@@ -63,7 +63,7 @@ function NavbarAdmin() {
                 Movie
                 <div
                   className={`h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full ${
-                    isActive ? 'bg-orange-500' : 'bg-transparent'
+                    isActive ? 'bg-primary-500' : 'bg-transparent'
                   }`}
                 />
               </>
@@ -82,7 +82,7 @@ function NavbarAdmin() {
                 BUY TICKET
                 <div
                   className={`h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full ${
-                    isActive ? 'bg-orange-500' : 'bg-transparent'
+                    isActive ? 'bg-primary-500' : 'bg-transparent'
                   }`}
                 />
               </>
@@ -94,22 +94,22 @@ function NavbarAdmin() {
             <div className="relative">
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="body-2-bold flex items-center justify-center px-4 sm:px-5 py-2 sm:py-3 rounded-xl sm:rounded-2xl bg-neutral-50 text-black hover:bg-orange-600 hover:text-white border border-orange-600 cursor-pointer text-sm sm:text-base md:text-lg"
+                className="body-2-bold flex items-center justify-center px-4 sm:px-5 py-2 sm:py-3 rounded-xl sm:rounded-2xl bg-neutral-50 text-black hover:bg-primary-600 hover:text-white border border-primary-600 cursor-pointer text-sm sm:text-base md:text-lg"
               >
                 {username}
               </button>
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-1 sm:mt-2 w-40 sm:w-48 bg-white border border-orange-600 rounded shadow-lg z-10">
+                <div className="absolute right-0 mt-1 sm:mt-2 w-40 sm:w-48 bg-white border border-primary-600 rounded shadow-lg z-10">
                   <Link
                     to="/profile"
                     onClick={() => setIsDropdownOpen(false)}
-                    className="block w-full text-left px-3 sm:px-4 py-1.5 sm:py-2 text-gray-700 hover:bg-orange-50 rounded cursor-pointer text-xs sm:text-sm md:text-base"
+                    className="block w-full text-left px-3 sm:px-4 py-1.5 sm:py-2 text-gray-700 hover:bg-primary-50 rounded cursor-pointer text-xs sm:text-sm md:text-base"
                   >
                     Profile
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="block w-full text-left px-3 sm:px-4 py-1.5 sm:py-2 text-gray-700 hover:bg-orange-50 rounded cursor-pointer text-xs sm:text-sm md:text-base"
+                    className="block w-full text-left px-3 sm:px-4 py-1.5 sm:py-2 text-gray-700 hover:bg-primary-50 rounded cursor-pointer text-xs sm:text-sm md:text-base"
                   >
                     Logout
                   </button>

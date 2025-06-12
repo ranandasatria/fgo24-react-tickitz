@@ -48,19 +48,19 @@ export default function NowPlayingSection() {
         <button
           onClick={scrollLeft}
           disabled={isAtStart}
-          className={`flex h-8 w-8 sm:h-10 sm:w-10 md:h-[3.375rem] md:w-[3.375rem] items-center justify-center rounded-full bg-orange-500 hover:bg-orange-600 ${
+          className={`flex h-8 w-8 sm:h-10 sm:w-10 md:h-[3.375rem] md:w-[3.375rem] items-center justify-center rounded-full bg-primary-500 hover:bg-primary-600 ${
             isAtStart ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
           }`}
         >
           <img src="/assets/arrowwhite24.svg" alt="Left Arrow" className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 rotate-180" />
         </button>
         <h2 className="font-bold text-md sm:text-xl md:text-2xl lg:text-3xl text-center">
-          Now Showing in Cinemas
+          Now showing
         </h2>
         <button
           onClick={scrollRight}
           disabled={isAtEnd}
-          className={`flex h-8 w-8 sm:h-10 sm:w-10 md:h-[3.375rem] md:w-[3.375rem] items-center justify-center rounded-full bg-orange-500 hover:bg-orange-600 ${
+          className={`flex h-8 w-8 sm:h-10 sm:w-10 md:h-[3.375rem] md:w-[3.375rem] items-center justify-center rounded-full bg-primary-500 hover:bg-primary-600 ${
             isAtEnd ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
           }`}
         >
@@ -108,9 +108,9 @@ export default function NowPlayingSection() {
           <div className="text-center w-full py-4 text-gray-600">No movies available.</div>
         )}
       </div>
-      <div className="slider w-full h-2 sm:h-2.5 md:h-3 bg-gray-700 rounded-xl sm:rounded-2xl overflow-hidden">
+      <div className="slider w-full h-2 sm:h-2.5 md:h-3 bg-gray-400 rounded-xl sm:rounded-2xl overflow-hidden">
         <div
-          className="bg-orange-500 h-full rounded-xl sm:rounded-2xl"
+          className="bg-primary-500 h-full rounded-xl sm:rounded-2xl"
           style={{ width: `${Math.min(scrollPosition, 100)}%` }}
         ></div>
       </div>
@@ -119,7 +119,7 @@ export default function NowPlayingSection() {
         to="/movie"
         className="px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 md:py-2.5 text-xs sm:text-sm md:text-base"
       >
-        View All
+        View all
       </Button>
     </div>
   )

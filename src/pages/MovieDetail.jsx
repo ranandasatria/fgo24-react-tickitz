@@ -23,17 +23,18 @@ function MovieDetail() {
     async function loadMovieDetails() {
       setIsLoading(true)
       const parsedId = parseInt(id)
-      
+
       if (parsedId > 1000000000000) {
         const localMovie = localMovies.find(m => m.id === parsedId)
         if (localMovie) {
           const genreIds = localMovie.category 
             ? localMovie.category.split(',').map((c, index) => ({ name: c.trim(), id: index + 1 })) 
             : []
-          const movieData = {
+          const releaseDate = localMovie.releaseDate ? formatDate(localMovie.releaseDate.split('T')[0]) : 'N/A'
+          setMovie({
             ...localMovie,
             genre_ids: genreIds,
-            release_date: localMovie.releaseDate,
+            release_date: releaseDate,
             runtime: localMovie.duration 
               ? localMovie.duration.replace('hours', 'h').replace('minute', 'm').split(' ')
                   .reduce((acc, val, idx) => acc + (idx === 0 ? parseInt(val) * 60 : parseInt(val) || 0), 0) 
@@ -43,27 +44,35 @@ function MovieDetail() {
             poster_path: localMovie.poster_path || localMovie.image,
             director: localMovie.director,
             cast: localMovie.cast
-          }
-          setMovie(movieData)
+          })
         }
       } else {
         const tmdbMovie = await fetchMovieDetails(id)
         if (tmdbMovie) {
-          setMovie(tmdbMovie)
+          const formattedTmdbMovie = {
+            ...tmdbMovie,
+            release_date: tmdbMovie.release_date ? formatDate(tmdbMovie.release_date) : 'N/A'
+          }
+          setMovie(formattedTmdbMovie)
         }
       }
-      
+
       setIsLoading(false)
     }
-    
+
     if (id) loadMovieDetails()
   }, [id])
 
-  const dates = ['Wednesday, 28 May, 2025', 'Thursday, 29 May, 2025', 'Friday, 30 May, 2025']
-  const times = ['08:30 AM', '02:00 PM', '07:00 PM', '11:35 PM']
-  const locations = ['Yogyakarta', 'Jakarta', 'Bandung']
+  const formatDate = (dateString) => {
+    if (!dateString) return 'N/A'
+    const [year, month, day] = dateString.split('-')
+    return `${day}/${month}/${year}`
+  }
+
+  const times = ['10:30 AM', '13:00 PM', '15:30 PM', '18:30 PM', '21:00 PM']
+  const locations = ['Bandung', 'Jakarta', 'Yogyakarta']
   const cinemas = [
-    { id: 'ebuid', name: 'Ebuid', src: '/assets/ebugray.svg' },
+    { id: 'ebvid', name: 'Ebvid', src: '/assets/ebugray.svg' },
     { id: 'cine1', name: 'CineOne21', src: '/assets/cine1large.svg' },
     { id: 'hiflix', name: 'Hiflix', src: '/assets/hiflixlarge.svg' },
   ]
@@ -81,8 +90,10 @@ function MovieDetail() {
     }
   }
 
+  const today = new Date().toISOString().split('T')[0]
+
   if (isLoading) {
-    return <div className="text-center py-8 text-gray-600">Loading movie details...</div>
+    return <div className="text-center py-8 text-gray-600">Please wait...</div>
   }
 
   if (!movie) {
@@ -135,12 +146,12 @@ function MovieDetail() {
           alt={movie?.title || movie?.movieTitle}
           onError={(e) => { e.target.src = '/assets/imageplaceholder.png' }}
         />
-        <div className="flex flex-col lg:flex-row w-full items-start gap-3 mx-auto mt-4 sm:mt-6 md:mt-8 lg:mt-4 px-3 sm:px-4 lg:pl-110 lg:gap-10">
+        <div className="flex flex-col lg:flex-row w-full items-start gap-3 mx-auto mt-4 sm:mt-6 md:mt-8 lg:mt-4 px-10 sm:px-4 lg:pl-110 lg:gap-10">
           <div className="flex flex-col items-start gap-2 sm:gap-3 ">
             <div className="flex flex-col items-start gap-1 sm:gap-2">
-              <div className="font-normal text-black-500 text-xs sm:text-sm md:text-base">Release Date</div>
+              <div className="font-normal text-black-500 text-xs sm:text-sm md:text-base">Release date</div>
               <div className="font-semibold text-sm sm:text-base md:text-lg lg:text-xl">
-                {movie?.release_date || movie?.releaseDate || 'N/A'}
+                {movie?.release_date || 'N/A'}
               </div>
             </div>
             <div className="flex flex-col items-start gap-1 sm:gap-2">
@@ -154,7 +165,7 @@ function MovieDetail() {
           </div>
           <div className="flex flex-col items-start gap-2 sm:gap-3 max-w-[70%] lg:pr-10 ">
             <div className="flex flex-col items-start gap-1 sm:gap-2">
-              <div className="font-normal text-black-500 text-xs sm:text-sm md:text-base">Directed By</div>
+              <div className="font-normal text-black-500 text-xs sm:text-sm md:text-base">Directed by</div>
               <div className="font-semibold text-sm sm:text-base md:text-lg lg:text-xl">
                 {movie?.director || 'N/A'}
               </div>
@@ -171,7 +182,7 @@ function MovieDetail() {
       <div className="flex flex-col items-start gap-6 sm:gap-8 md:gap-10 w-full bg-neutral-100 rounded-xl sm:rounded-2xl lg:rounded-4xl mb-6 sm:mb-8 px-4 sm:px-8 md:px-12 lg:px-20 py-6 sm:py-8 md:py-10">
         <div className="flex flex-row items-start sm:items-center gap-4 sm:gap-6 w-full justify-between">
           <h1 className="font-bold text-black-800 text-lg sm:text-xl md:text-2xl lg:text-3xl">
-            Book Tickets
+            Book tickets
           </h1>
           <Link
             to="/buyticket"
@@ -186,39 +197,36 @@ function MovieDetail() {
             onClick={handleBookNowClick}
           >
             <button
-              className={`font-semibold flex items-center justify-center px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-xl sm:rounded-2xl bg-orange-500 text-white text-xs sm:text-sm md:text-base ${
-                isButtonDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-orange-600'
+              className={`font-semibold flex items-center justify-center px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-xl sm:rounded-2xl bg-primary-500 text-white text-xs sm:text-sm md:text-base ${
+                isButtonDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primary-600'
               }`}
             >
-              Book Now
+              Book now
             </button>
           </Link>
         </div>
         <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 w-full ">
           <div className="flex w-full sm:w-96 max-w-xs sm:max-w-[24rem] flex-col items-start gap-3 sm:gap-4">
-            <select
+            <label htmlFor="date" className="text-sm sm:text-base font-medium text-gray-700">Select date</label>
+            <input
+              type="date"
+              id="date"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
+              min={today}
               className="border rounded p-2 sm:p-2.5 w-full text-xs sm:text-sm md:text-base"
-            >
-              <option value="" disabled>
-                Choose Date
-              </option>
-              {dates.map((date) => (
-                <option key={date} value={date}>
-                  {date}
-                </option>
-              ))}
-            </select>
+              required
+            />
           </div>
           <div className="flex w-full sm:w-96 max-w-xs sm:max-w-[24rem] flex-col items-start gap-3 sm:gap-4">
+            <label htmlFor="time" className="text-sm sm:text-base font-medium text-gray-700">Select time</label>
             <select
               value={selectedTime}
               onChange={(e) => setSelectedTime(e.target.value)}
               className="border rounded p-2 sm:p-2.5 w-full text-xs sm:text-sm md:text-base"
             >
               <option value="" disabled>
-                Choose Time
+                Choose time
               </option>
               {times.map((time) => (
                 <option key={time} value={time}>
@@ -228,13 +236,15 @@ function MovieDetail() {
             </select>
           </div>
           <div className="flex w-full sm:w-96 max-w-xs sm:max-w-[24rem] flex-col items-start gap-3 sm:gap-4">
+            <label htmlFor="location" className="text-sm sm:text-base font-medium text-gray-700">Select location</label>
             <select
+              id="location"
               value={selectedLocation}
               onChange={(e) => setSelectedLocation(e.target.value)}
               className="border rounded p-2 sm:p-2.5 w-full text-xs sm:text-sm md:text-base"
             >
               <option value="" disabled>
-                Choose Location
+                Location
               </option>
               {locations.map((location) => (
                 <option key={location} value={location}>
@@ -247,7 +257,7 @@ function MovieDetail() {
         <div className="flex flex-col items-start gap-4 sm:gap-6 w-full">
           <div className="flex items-center gap-4 sm:gap-6">
             <label htmlFor="cinema" className="font-semibold text-black-500 text-base sm:text-lg md:text-xl">
-              Choose Cinema
+              Choose cinema
             </label>
             <div className="font-normal text-black-500 text-xs sm:text-sm md:text-base">
               {cinemas.length} Results

@@ -46,11 +46,11 @@ export default function UpcomingMoviesSection() {
       <div className="flex w-full flex-col items-start gap-4 sm:gap-6 max-w-7xl">
         <div className="w-full flex flex-col md:flex-col items-center md:items-center justify-center gap-4 ">
           <div className="flex flex-col items-center gap-4 sm:gap-5 md:gap-6 w-full md:shrink">
-            {/* <h3 className="font-semibold rounded-full bg-orange-50 px-3 sm:px-4 py-1 sm:py-2 text-orange-500 text-xs sm:text-sm md:text-base lg:text-lg">
+            {/* <h3 className="font-semibold rounded-full bg-primary-50 px-3 sm:px-4 py-1 sm:py-2 text-primary-500 text-xs sm:text-sm md:text-base lg:text-lg">
               Upcoming Movies
             </h3> */}
             <h1 className="font-bold text-black text-lg md:text-2xl lg:text-3xl">
-              Exciting Movies Coming Soon
+              Exciting movies coming soon
             </h1>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 w-full h-full grow">
@@ -60,7 +60,7 @@ export default function UpcomingMoviesSection() {
               onClick={() => handleGenreToggle(genre.id)}
               className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs md:text-sm font-medium transition-colors ${
                 selectedGenres.includes(genre.id)
-                  ? 'bg-orange-500 text-white'
+                  ? 'bg-primary-500 text-white'
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               }`}
             >
@@ -96,7 +96,7 @@ export default function UpcomingMoviesSection() {
                     >
                       {movie.title.length > 15 ? `${movie.title.slice(0, 15)}...` : movie.title}
                     </p>
-                    <p className="font-medium rounded-full bg-orange-50 px-3 sm:px-4 py-1 sm:py-1.5 text-orange-500 text-xs sm:text-sm md:text-base">
+                    <p className="font-medium rounded-full bg-primary-50 px-3 sm:px-4 py-1 sm:py-1.5 text-primary-500 text-xs sm:text-sm md:text-base">
                       {movie.release_date}
                     </p>
                   </div>
@@ -108,9 +108,9 @@ export default function UpcomingMoviesSection() {
               </div>
             )}
           </div>
-          <div className="slider w-full h-2 sm:h-2.5 md:h-3 bg-gray-700 rounded-xl sm:rounded-2xl overflow-hidden">
+          <div className="slider w-full h-2 sm:h-2.5 md:h-3 bg-gray-400 rounded-xl sm:rounded-2xl overflow-hidden">
             <div
-              className="bg-orange-500 h-full rounded-xl sm:rounded-2xl"
+              className="bg-primary-500 h-full rounded-xl sm:rounded-2xl"
               style={{ width: `${Math.min(scrollPosition, 100)}%` }}
             ></div>
           </div>
@@ -119,7 +119,7 @@ export default function UpcomingMoviesSection() {
               <button
                 onClick={scrollLeft}
                 disabled={isAtStart}
-                className={`flex h-8 w-8 sm:h-10 sm:w-10 md:h-[3.375rem] md:w-[3.375rem] items-center justify-center rounded-full bg-orange-500 hover:bg-orange-600 ${
+                className={`flex h-8 w-8 sm:h-10 sm:w-10 md:h-[3.375rem] md:w-[3.375rem] items-center justify-center rounded-full bg-primary-500 hover:bg-primary-600 ${
                   isAtStart ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
                 }`}
               >
@@ -132,7 +132,7 @@ export default function UpcomingMoviesSection() {
               <button
                 onClick={scrollRight}
                 disabled={isAtEnd}
-                className={`flex h-8 w-8 sm:h-10 sm:w-10 md:h-[3.375rem] md:w-[3.375rem] items-center justify-center rounded-full bg-orange-500 hover:bg-orange-600 ${
+                className={`flex h-8 w-8 sm:h-10 sm:w-10 md:h-[3.375rem] md:w-[3.375rem] items-center justify-center rounded-full bg-primary-500 hover:bg-primary-600 ${
                   isAtEnd ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
                 }`}
               >

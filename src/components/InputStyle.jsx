@@ -27,7 +27,7 @@ function InputStyle({ label, id, placeholder, showChevron = false, ...props }) {
 export default InputStyle;
 
 export function InputNormal({ label, id, className, ...props }) {
-  const baseStyles = ' placeholder:text-neutral-300 bg-neutral-50 px-4 sm:px-5 py-2 sm:py-3 rounded sm:rounded-md text-sm  md:text-md outline-none focus-within:ring-1 focus-within:ring-orange-50 ';
+  const baseStyles = ' placeholder:text-neutral-300 bg-neutral-50 px-4 sm:px-5 py-2 sm:py-3 rounded sm:rounded-md text-sm  md:text-md outline-none focus-within:ring-1 focus-within:ring-primary-50 ';
   return (
     <div className="flex flex-col gap-1 sm:gap-2 w-full">
       <label className="font-medium text-black-300 sm:text-base md:text-lg" htmlFor={id}>{label}</label>
@@ -43,7 +43,7 @@ export function InputPassword({ label, id, className, ...props }) {
   return (
     <div className="flex flex-col gap-1 sm:gap-2 w-full">
       <label className="font-medium text-black-300 sm:text-base md:text-lg" htmlFor={id}>{label}</label>
-      <div className="relative bg-neutral-50 rounded focus-within:ring-1 focus-within:ring-orange-50">
+      <div className="relative bg-neutral-50 rounded focus-within:ring-1 focus-within:ring-primary-50">
         <input
           id={id}
           type={showPassword ? 'text' : 'password'}

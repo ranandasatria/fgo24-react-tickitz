@@ -85,7 +85,7 @@ function ListMovie({ sortOption, movies: propMovies }) {
             placeholder="Search movies by title..."
             value={searchQuery}
             onChange={handleSearchChange}
-            className="w-full px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 text-xs sm:text-sm md:text-base"
+            className="w-full px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 text-xs sm:text-sm md:text-base"
           />
         </div>
         <div className="flex flex-wrap gap-1.5 sm:gap-2">
@@ -95,7 +95,7 @@ function ListMovie({ sortOption, movies: propMovies }) {
               onClick={() => handleGenreToggle(genre.id)}
               className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm md:text-base font-medium transition-colors ${
                 selectedGenres.includes(genre.id)
-                  ? 'bg-orange-500 text-white'
+                  ? 'bg-primary-500 text-white'
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               }`}
             >
@@ -131,7 +131,7 @@ function ListMovie({ sortOption, movies: propMovies }) {
               >
                 <div className="h-[20rem] sm:h-[22rem] md:h-[24rem] relative">
                   {(movie.vote_average || 0) > 7.0 && (
-                    <span className="absolute top-1 sm:top-1 left-1 sm:left-2 bg-green-50 text-orange-500 text-xs sm:text-sm font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded z-10 hidden group-hover:block">
+                    <span className="absolute top-1 sm:top-1 left-1 sm:left-2 bg-green-50 text-primary-500 text-xs sm:text-sm font-semibold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded z-10 hidden group-hover:block">
                       Recommended
                     </span>
                   )}
@@ -162,7 +162,7 @@ function ListMovie({ sortOption, movies: propMovies }) {
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className={`flex h-8 w-8 sm:h-10 sm:w-10 md:h-[3.375rem] md:w-[3.375rem] items-center justify-center rounded-full bg-orange-500 ${
+                className={`flex h-8 w-8 sm:h-10 sm:w-10 md:h-[3.375rem] md:w-[3.375rem] items-center justify-center rounded-full bg-primary-500 ${
                   currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
                 }`}
               >
@@ -174,7 +174,7 @@ function ListMovie({ sortOption, movies: propMovies }) {
                   onClick={() => handlePageChange(page)}
                   className={`flex h-8 w-8 sm:h-10 sm:w-10 md:h-[3.375rem] md:w-[3.375rem] items-center justify-center rounded-full cursor-pointer ${
                     currentPage === page
-                      ? 'bg-orange-500'
+                      ? 'bg-primary-500'
                       : 'border border-black-500'
                   }`}
                 >
@@ -186,7 +186,7 @@ function ListMovie({ sortOption, movies: propMovies }) {
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className={`flex h-8 w-8 sm:h-10 sm:w-10 md:h-[3.375rem] md:w-[3.375rem] items-center justify-center rounded-full bg-orange-500 ${
+                className={`flex h-8 w-8 sm:h-10 sm:w-10 md:h-[3.375rem] md:w-[3.375rem] items-center justify-center rounded-full bg-primary-500 ${
                   currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
                 }`}
               >

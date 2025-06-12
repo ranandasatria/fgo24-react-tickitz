@@ -6,17 +6,18 @@ Pixels	 Tailwind	    REM
 
 @theme {
   --font-dm-sans: "DM Sans", sans-serif;
-   /* === Brand Colors: Orange === */
-  --color-orange-50: #FDE1D2;
-  --color-orange-100: #FCCDB3;
-  --color-orange-200: #FBB48D;
-  --color-orange-300: #FA9B68;
-  --color-orange-400: #F88242;
-  --color-orange-500: #F7691C;
-  --color-orange-600: #CE5817;
-  --color-orange-700: #A54613;
-  --color-orange-800: #7C350E;
-  --color-orange-900: #522309;
+   /* === Brand Colors: primary === */
+  
+  --color-primary-50: #FAFAFA;
+  --color-primary-100: #F4F4F5;
+  --color-primary-200: #E4E4E7;
+  --color-primary-300: #D4D4D8;
+  --color-primary-400: #A1A1AA;
+  --color-primary-500: #18181B;
+  --color-primary-600: #27272A;
+  --color-primary-700: #3F3F46;
+  --color-primary-800: #52525B;
+  --color-primary-900: #71717A;
 
   /* === Neutrals (Black & White Colors) === */
   --color-neutral-50: #FFFFFF;
@@ -79,7 +80,7 @@ Pixels	 Tailwind	    REM
   --color-wrong-800: #7B2A2A;
   --color-wrong-900: #521C1C;
 
-  /* Alert - Orange */
+  /* Alert - primary */
   --color-alert-50: #FAE8CC;
   --color-alert-100: #F7D9AA;
   --color-alert-200: #F2C580;

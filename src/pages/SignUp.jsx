@@ -17,7 +17,7 @@ function SignUp() {
 
   const validationSchema = yup.object({
     email: yup.string().trim().email('Invalid email.').required('Email is required.'),
-    password: yup.string().required('Password is required.'),
+    password: yup.string().required('Password is required.').min(6, 'Password must be at least 6 characters.'),
     terms: yup.bool().oneOf([true], 'You must agree to the terms and conditions.'),
   })
 
@@ -60,7 +60,7 @@ function SignUp() {
   return (
     <div className="w-full min-h-screen flex items-center justify-center bg-center bg-black/30 bg-[url('/assets/witfh.png')] bg-blend-multiply">
       <div className="bg-white/80 flex flex-col w-full max-w-[22rem] sm:max-w-[28rem] md:max-w-[35rem] min-h-[90vh] sm:min-h-[80vh] items-center justify-center px-4 sm:px-8 md:px-24 py-6 rounded-2xl gap-3 sm:gap-4">
-        <img src="/assets/tickitznav.svg" alt="Tickitz Logo" className="w-24 sm:w-28 md:w-32" />
+        <Link to="/"><img src="/assets/tontrix-high-resolution-logo-transparent.png" alt="Tontrix Logo" className="w-24 sm:w-28 md:w-32" /></Link>
         <div className="flex flex-col gap-2 justify-start w-full">
           <h1 className="font-bold text-xl sm:text-2xl md:text-3xl text-black-500">Sign up</h1>
         </div>
@@ -99,11 +99,11 @@ function SignUp() {
           <div className="border w-full border-black-100"></div>
         </div>
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 items-center justify-evenly w-full">
-          <Link to="https://google.com" className="flex items-center justify-center gap-2 sm:gap-4 bg-white px-3 sm:px-5 py-2 sm:py-3 rounded-2xl shadow-lg hover:bg-orange-50 cursor-pointer w-full sm:w-auto">
+          <Link to="https://google.com" className="flex items-center justify-center gap-2 sm:gap-4 bg-white px-3 sm:px-5 py-2 sm:py-3 rounded-2xl shadow-lg hover:bg-primary-50 cursor-pointer w-full sm:w-auto">
             <FcGoogle className="text-lg sm:text-xl" />
             <p className="font-medium text-neutral-300 text-sm sm:text-base">Google</p>
           </Link>
-          <Link to="https://facebook.com" className="flex items-center justify-center gap-2 sm:gap-4 bg-white px-3 sm:px-5 py-2 sm:py-3 rounded-2xl shadow-lg hover:bg-orange-50 cursor-pointer w-full sm:w-auto">
+          <Link to="https://facebook.com" className="flex items-center justify-center gap-2 sm:gap-4 bg-white px-3 sm:px-5 py-2 sm:py-3 rounded-2xl shadow-lg hover:bg-primary-50 cursor-pointer w-full sm:w-auto">
             <FaFacebook className="text-blue-950 text-lg sm:text-xl" />
             <p className="font-medium text-neutral-300 text-sm sm:text-base">Facebook</p>
           </Link>

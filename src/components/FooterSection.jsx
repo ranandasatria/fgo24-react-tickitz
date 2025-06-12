@@ -3,7 +3,7 @@ function FooterSection() {
     <div className="flex p-4 sm:p-6 md:p-8 lg:p-20 flex-col items-start gap-6 sm:gap-8 self-stretch rounded-tl-2xl sm:rounded-tl-3xl rounded-tr-2xl sm:rounded-tr-3xl bg-black-500">
       <div className="flex flex-col lg:flex-row items-start gap-4">
         <div className="flex flex-col items-start gap-4 w-full sm:w-[39.25rem]">
-          <img src="/assets/tickitzfooter.svg" alt="Tickitz Logo" className="w-28 sm:w-32 md:w-40" />
+          <img src="/assets/tontrix-high-resolution-logo-transparent-white.png" alt="Tontrix Logo" className="w-28 sm:w-32 md:w-40" />
           <p className="font-normal text-neutral-100 text-xs sm:text-sm md:text-base lg:text-lg">
             Stop waiting in line. Buy tickets conveniently, watch movies quietly.
           </p>
@@ -50,7 +50,7 @@ function FooterSection() {
         </div>
       </div>
       <p className="font-normal text-neutral-100 text-xs sm:text-sm md:text-base lg:text-lg text-center sm:text-left w-full">
-        © 2025 Tickitz. All Rights Reserved.
+        © 2025 Tontrix. All Rights Reserved.
       </p>
     </div>
   );

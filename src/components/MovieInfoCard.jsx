@@ -24,7 +24,7 @@ const MovieCard = ({ movie, genres, time }) => {
               </span>
             ))}
           </div>
-          <p className="text-xs sm:text-sm md:text-base text-neutral-500">Regular - {time || 'Time'}</p>
+          <p className="text-xs sm:text-sm md:text-base text-neutral-500">{time || 'Time'}</p>
         </div>
         <Button to="/movie" className="w-fit mt-2 sm:mt-3" variant="primary">
           Change

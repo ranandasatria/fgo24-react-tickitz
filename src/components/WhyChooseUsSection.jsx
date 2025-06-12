@@ -2,11 +2,11 @@ function WhyChooseUsSection() {
   return (
     <div className="flex flex-col md:flex-row p-4 sm:p-6 md:p-8 lg:p-12 xl:p-20 justify-center items-center gap-6 sm:gap-8 md:gap-10 lg:gap-[3.75rem] self-stretch rounded-2xl sm:rounded-3xl bg-gray-900">
       <div className="flex w-full md:w-auto flex-col items-start gap-4 sm:gap-5 md:gap-6">
-        {/* <h3 className="font-semibold rounded-full bg-orange-50 px-3 sm:px-4 py-1 sm:py-2 text-orange-500 text-xs sm:text-sm md:text-base lg:text-lg">
+        {/* <h3 className="font-semibold rounded-full bg-primary-50 px-3 sm:px-4 py-1 sm:py-2 text-primary-500 text-xs sm:text-sm md:text-base lg:text-lg">
           Why Choose Us
         </h3> */}
         <h1 className="font-bold text-white text-lg md:text-xl lg:text-3xl">
-          Unleashing the Ultimate Movie Experience
+          Unleashing the ultimate movie experience
         </h1>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6 w-full">
