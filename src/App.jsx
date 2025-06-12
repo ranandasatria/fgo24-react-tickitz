@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import MoviePage from './pages/MoviePage';
 import MovieDetail from './pages/MovieDetail';
@@ -15,16 +15,17 @@ import Profile from './pages/Profile';
 import AddMovie from './pages/AddMovie';
 import ListMovieAdmin from './pages/ListMovieAdmin';
 import { useSelector } from 'react-redux';
+import Dashboard from './pages/Dashboard';
 
 const ProtectedRoute = ({ element, allowedRoles }) => {
-  const currentUser = useSelector((state) => state.auth.currentUser);
+  const currentUser = useSelector((state) => state.auth.currentUser)
   if (!currentUser) {
-    return <div>Unauthorized - Please log in</div>;
+    return <Navigate to="/login" replace />
   }
   if (allowedRoles && !allowedRoles.includes(currentUser.role)) {
-    return <div>Unauthorized - Admin access required</div>;
+    return <Navigate to="/" replace />
   }
-  return element;
+  return element
 };
 
 const router = createBrowserRouter([
@@ -66,11 +67,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/profile',
-    element: <Profile />
+    element: <ProtectedRoute element={<Profile />} />
   },
   {
     path: '/dashboard',
-    element: <ProtectedRoute element={<div>Dashboard Placeholder</div>} allowedRoles={['admin']} />
+    element: <ProtectedRoute element={<Dashboard />} allowedRoles={['admin']} />
   },
   {
     path: '/listmovie',
