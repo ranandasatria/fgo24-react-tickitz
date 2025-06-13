@@ -29,12 +29,12 @@ function Navbar() {
         <NavLink to="/" end>
           <img src="/assets/tontrix-high-resolution-logo-transparent.png" alt="Tontrix Logo" className="h-6 sm:h-8 md:h-10" />
         </NavLink>
-        <div className="hidden gap-6 md:gap-8 md:flex">
+        <div className="hidden gap-6 md:gap-8 md:flex ">
           <NavLink
             to="/"
             end
             className={({ isActive }) =>
-              `flex flex-col items-center gap-1 text-sm sm:text-base md:text-lg font-semibold ${
+              `h-full flex flex-col items-center justify-end gap-1 text-sm sm:text-base md:text-lg font-semibold ${
                 isActive ? 'text-black' : 'text-gray-600'
               }`
             }
@@ -43,7 +43,7 @@ function Navbar() {
               <>
                 Home
                 <div
-                  className={`h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full ${
+                  className={`h-0.5 w-full ${
                     isActive ? 'bg-primary-500' : 'bg-transparent'
                   }`}
                 />
@@ -53,7 +53,7 @@ function Navbar() {
           <NavLink
             to="/movie"
             className={({ isActive }) =>
-              `flex flex-col items-center gap-1 text-sm sm:text-base md:text-lg font-semibold ${
+              `flex flex-col items-center justify-evenly gap-1 text-sm sm:text-base md:text-lg font-semibold ${
                 isActive ? 'text-black' : 'text-gray-600'
               }`
             }
@@ -62,7 +62,7 @@ function Navbar() {
               <>
                 Movie
                 <div
-                  className={`h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full ${
+                  className={`h-0.5 w-full ${
                     isActive ? 'bg-primary-500' : 'bg-transparent'
                   }`}
                 />
