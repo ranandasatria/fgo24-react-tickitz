@@ -1,5 +1,4 @@
 name: Deploy Frontend to GHCR
-
 on:
   push:
     branches:
