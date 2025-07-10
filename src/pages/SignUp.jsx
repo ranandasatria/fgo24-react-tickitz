@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { addUsersAction } from '../redux/reducers/users';
 import { Checkbox, InputNormal, InputPassword } from '../components/InputStyle';
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
@@ -11,10 +9,9 @@ import { FaFacebook } from 'react-icons/fa';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import toast from 'react-hot-toast';
+import http from '../lib/http';
 
 function SignUp() {
-  const users = useSelector((state) => state.users.users)
-
   const validationSchema = yup.object({
     email: yup.string().trim().email('Invalid email.').required('Email is required.'),
     password: yup.string().required('Password is required.').min(6, 'Password must be at least 6 characters.'),
@@ -31,29 +28,25 @@ function SignUp() {
   })
 
   const [error, setError] = useState('')
-  const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  function isRegistered(email, users) {
-    return users.some((user) => user.email === email)
-  }
-
-  function onSubmit(value) {
-    const sanitizedValue = {
-      ...value,
-      password: btoa(value.password),
-      email: value.email.trim(),
-      phone: '',
-    }
-    if (!isRegistered(sanitizedValue.email, users)) {
-      setError('')
-      dispatch(addUsersAction(sanitizedValue))
+  const onSubmit = async (data) => {
+    try {
+      await http().post('/register', {
+        email: data.email.trim(),
+        password: data.password,
+      });
       toast.success('Thank you for signing up!', {
         style: { background: '#4ade80', color: '#fff' },
-      })
-      navigate('/login')
-    } else {
-      setError('Email registered, please login.')
+      });
+      navigate('/login`')
+    } catch(err) {
+      console.error(err);
+      if (err.response && err.response.status === 409){
+        setError('Email is already registered.')
+      } else {
+        setError('Something went wrong. Please try again')
+      }
     }
   }
 
