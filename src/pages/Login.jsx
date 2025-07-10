@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { InputNormal } from '../components/InputStyle';
+import { InputNormal, InputPassword } from '../components/InputStyle';
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
 import LinkButton from '../components/LinkButton';
 import { loginAction } from '../redux/reducers/auth';
-import { InputPassword } from '../components/InputStyle';
 import toast from 'react-hot-toast';
+import http from '../lib/http';
 
 function Login() {
   const validationSchema = yup.object({
     email: yup.string().trim().email('Invalid email').required('Email is required'),
     password: yup.string().required('Password is required'),
-  })
+  });
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(validationSchema),
@@ -26,28 +26,36 @@ function Login() {
       email: '',
       password: '',
     },
-  })
+  });
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const users = useSelector((state) => state.users.users)
-  const [error, setError] = useState('')
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [error, setError] = useState('');
 
-  const onSubmit = (data) => {
-    const { email, password } = data
-    const user = users.find((u) => u.email === email.trim() && u.password === btoa(password))
+  const onSubmit = async (data) => {
+    try {
+      const res = await http().post('/login', {
+        email: data.email,
+        password: data.password,
+      });
 
-    if (user) {
-      setError('')
-      dispatch(loginAction({ email: user.email, id: user.id, name: user.name || user.email.split('@')[0], role: user.role }))
+      const token = res.data.results.token;
+      const profileRes = await http(token).get('/profile');
+      const user = profileRes.data.results;
+
+      dispatch(loginAction({ token, user }));
+      setError('');
+
       toast.success('Login success!', {
         style: { background: '#4ade80', color: '#fff' },
-      })
-      navigate(user.role === 'admin' ? '/dashboard' : '/')
-    } else {
-      setError('Wrong email or password')
+      });
+
+      navigate(user.role === 'admin' ? '/dashboard' : '/');
+    } catch (err) {
+      console.error(err);
+      setError('Wrong email or password');
     }
-  }
+  };
 
   return (
     <div className="w-full min-h-screen flex items-center justify-center bg-center bg-black/30 bg-[url('/assets/witfh.png')] bg-blend-multiply">
@@ -97,7 +105,7 @@ function Login() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default Login;
