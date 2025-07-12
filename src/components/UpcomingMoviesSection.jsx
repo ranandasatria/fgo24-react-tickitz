@@ -10,6 +10,7 @@ export default function UpcomingMoviesSection() {
   const [scrollPosition, setScrollPosition] = useState(0)
   const [isAtStart, setIsAtStart] = useState(true)
   const [isAtEnd, setIsAtEnd] = useState(false)
+  const [imageErrors, setImageErrors] = useState({});
 
   const handleGenreToggle = (genreId) => {
     setSelectedGenres((prev) =>
@@ -36,6 +37,10 @@ export default function UpcomingMoviesSection() {
     setIsAtEnd(scrollLeft + clientWidth >= scrollWidth - 1)
   }
 
+  const handleImageError = (id) => {
+    setImageErrors(prev => ({ ...prev, [id]: true }));
+  };
+  
   const filteredMovies = upcomingMovies.filter((movie) =>
     selectedGenres.length === 0 ||
     selectedGenres.every((genreId) => movie.genre_ids.includes(genreId))
@@ -84,10 +89,11 @@ export default function UpcomingMoviesSection() {
                 >
                   <div className=" h-48 sm:h-60 md:h-72 lg:h-80 rounded-xl sm:rounded-2xl overflow-hidden">
                     <img
-                      className="w-full h-full object-cover transform transition-transform duration-300 hover:scale-105"
-                      src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                      alt={movie.title}
-                    />
+                  className="h-full w-full rounded-xl sm:rounded-2xl object-cover"
+                  src={imageErrors[movie.id] || !movie.image ? '/assets/image.png' : movie.image}
+                  alt={movie.title}
+                  onError={() => handleImageError(movie.id)}
+                />
                   </div>
                   <div className="flex flex-col items-center gap-2 w-full">
                     <p
