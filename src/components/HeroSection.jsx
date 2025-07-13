@@ -7,7 +7,7 @@ function HeroSection() {
       <h1 className="font-medium flex flex-col items-center gap-1 sm:gap-2 text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
         Experience the magic of cinema:{' '}
         <span className="text-primary-500 font-bold text-2xl sm:text-3xl md:text42xl lg:text-5xl">
-          Hello from VPS
+          Hello from VPS v2
         </span>
       </h1>
       {/* <p className="font-normal max-w-xs sm:max-w-md md:max-w-lg text-neutral-500 text-xs sm:text-sm md:text-base lg:text-lg">
