@@ -45,7 +45,7 @@ function MovieDetail() {
     if (id) loadMovieDetails();
   }, [id, fetchMovieDetails]);
 
-  const times = ['10:30 AM', '13:00 PM', '15:30 PM', '18:30 PM', '21:00 PM'];
+  const times = ['10:30', '13:00', '15:30', '18:30', '21:00'];
   const locations = ['Bandung', 'Jakarta', 'Yogyakarta'];
   const cinemas = [
     { id: 'ebvid', name: 'Ebvid', src: '/assets/ebugray.svg' },
