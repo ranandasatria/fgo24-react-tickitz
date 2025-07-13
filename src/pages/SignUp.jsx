@@ -39,7 +39,7 @@ function SignUp() {
       toast.success('Thank you for signing up!', {
         style: { background: '#4ade80', color: '#fff' },
       });
-      navigate('/login`')
+      navigate('/login')
     } catch(err) {
       console.error(err);
       if (err.response && err.response.status === 409){
