@@ -1,7 +1,6 @@
-// Profile.jsx
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Navbar from '../components/Navbar';
@@ -9,8 +8,6 @@ import SidebarUser from '../components/SidebarUser';
 import ProfileTab from '../components/ProfileTab';
 import { InputNormal } from '../components/InputStyle';
 import Button from '../components/Button';
-import { updateUserAction } from '../redux/reducers/users';
-import { loginAction } from '../redux/reducers/auth';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import toast from 'react-hot-toast';
 import http from '../lib/http';
@@ -18,36 +15,50 @@ import http from '../lib/http';
 function Profile() {
   const currentUser = useSelector((state) => state.auth.currentUser);
   const token = useSelector((state) => state.auth.token);
-  const users = useSelector((state) => state.users.users);
-  const dispatch = useDispatch();
-
-  const defaultName = currentUser?.email ? currentUser.email.split('@')[0] : '';
+  const [showSettings, setShowSettings] = useState(true);
+  const [showHistory, setShowHistory] = useState(false);
+  const [showDetails, setShowDetails] = useState({});
+  const [userTickets, setUserTickets] = useState([]);
+  const [userData, setUserData] = useState({
+    name: currentUser?.name || (currentUser?.email?.split('@')[0] || ''),
+    email: currentUser?.email || '',
+    phone: currentUser?.phone || '',
+  });
 
   const validationSchema = yup.object({
     name: yup.string().trim().required('Full name is required.'),
     email: yup.string().trim().email('Invalid email.').required('Email is required.'),
     phone: yup.string().optional(),
     oldPassword: yup.string().notRequired(),
-    password: yup.string().notRequired(),
+    password: yup.string().min(6, 'New password must be at least 6 characters.').notRequired(),
   });
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      name: currentUser?.name || defaultName,
-      email: currentUser?.email || '',
-      phone: users.find((user) => user.id === currentUser?.id)?.phone || '',
+      name: userData.name,
+      email: userData.email,
+      phone: userData.phone,
       oldPassword: '',
       password: '',
     },
   });
 
-  const [showSettings, setShowSettings] = useState(true);
-  const [showHistory, setShowHistory] = useState(false);
-  const [passwordError, setPasswordError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [showDetails, setShowDetails] = useState({});
-  const [userTickets, setUserTickets] = useState([]);
+  useEffect(() => {
+    async function fetchUserData() {
+      if (!token || !currentUser) return;
+      try {
+        const res = await http(token).get('/profile');
+        const { full_name, email, phone_number } = res.data.results;
+        const newUserData = { name: full_name, email, phone: phone_number || '' };
+        setUserData(newUserData);
+        reset({ ...newUserData, oldPassword: '', password: '' });
+      } catch {
+        toast.error('Failed to fetch user data');
+      }
+    }
+    fetchUserData();
+  }, [token, currentUser, reset]);
 
   useEffect(() => {
     async function fetchTickets() {
@@ -62,52 +73,28 @@ function Profile() {
     if (showHistory) fetchTickets();
   }, [showHistory, token, currentUser]);
 
-  function isEmailTaken(email, userId) {
-    return users.some((user) => user.email === email.trim() && user.id !== userId);
-  }
-
-  function onSubmit(data) {
-    const userData = users.find((user) => user.id === currentUser.id);
-    const storedPassword = userData?.password;
-
-    if (data.password || data.oldPassword) {
-      if (!data.oldPassword) {
-        setPasswordError('Old password is required to change password.');
-        return;
-      }
-      if (!data.password) {
-        setPasswordError('New password is required.');
-        return;
-      }
-      if (data.password.length < 6) {
-        setPasswordError('New password must be at least 6 characters.');
-        return;
-      }
-      if (storedPassword !== btoa(data.oldPassword)) {
-        setPasswordError('Old password is incorrect.');
-        return;
-      }
-    }
-
-    const sanitizedData = {
-      name: data.name.trim(),
-      email: data.email.trim(),
-      phone: data.phone || '',
-      ...(data.password && { password: btoa(data.password) }),
-    };
-
-    if (isEmailTaken(sanitizedData.email, currentUser.id)) {
-      setEmailError('Email is already registered by another user.');
+  async function onSubmit(data) {
+    if (!token || !currentUser) {
+      toast.error('Please log in to update profile', { style: { background: '#ef4444', color: '#fff' } });
       return;
     }
 
-    dispatch(updateUserAction({ id: currentUser.id, updatedData: sanitizedData }));
-    dispatch(loginAction({ email: sanitizedData.email, id: currentUser.id, name: sanitizedData.name }));
-    setPasswordError('');
-    setEmailError('');
-    toast.success('Profile updated successfully!', {
-      style: { background: '#4ade80', color: '#fff' },
-    });
+    const payload = {
+      full_name: data.name.trim(),
+      email: data.email.trim(),
+      phone_number: data.phone || null,
+      ...(data.oldPassword && data.password && { oldPassword: data.oldPassword, newPassword: data.password }),
+    };
+
+    try {
+      await http(token).patch('/profile', payload);
+      setUserData({ name: data.name.trim(), email: data.email.trim(), phone: data.phone || '' });
+      reset({ ...data, oldPassword: '', password: '' });
+      toast.success('Profile updated successfully!', { style: { background: '#4ade80', color: '#fff' } });
+    } catch (error) {
+      const message = error.response?.data?.message || 'Failed to update profile';
+      toast.error(message, { style: { background: '#ef4444', color: '#fff' } });
+    }
   }
 
   function handleSettings() {
@@ -147,7 +134,7 @@ function Profile() {
                     <InputNormal
                       label='Full name'
                       type='text'
-                      placeholder={users.find((user) => user.id === currentUser?.id)?.name || defaultName}
+                      placeholder={userData.name || 'Input your name'}
                       id='name'
                       className='border border-primary-300 outline-primary-900'
                       {...register('name')}
@@ -156,17 +143,16 @@ function Profile() {
                     <InputNormal
                       label='Email'
                       type='email'
-                      placeholder={currentUser?.email || 'Input your email'}
+                      placeholder={userData.email || 'Input your email'}
                       id='email'
                       className='border border-primary-300 outline-primary-900'
                       {...register('email')}
                     />
                     {errors.email && <div className='text-wrong-600 text-sm md:text-base'>{errors.email.message}</div>}
-                    {emailError && <div className='text-wrong-600 text-sm md:text-base'>{emailError}</div>}
                     <InputNormal
                       label='Phone number'
                       type='number'
-                      placeholder={users.find((user) => user.id === currentUser?.id)?.phone || 'Input your phone number'}
+                      placeholder={userData.phone || 'Input your phone number'}
                       id='phone'
                       className='border border-primary-300 outline-primary-900'
                       {...register('phone')}
@@ -194,7 +180,6 @@ function Profile() {
                           {...register('oldPassword')}
                         />
                         {errors.oldPassword && <div className='text-wrong-600 text-sm md:text-base'>{errors.oldPassword.message}</div>}
-                        {passwordError && <div className='text-wrong-600 text-sm md:text-base'>{passwordError}</div>}
                       </div>
                       <div className='w-full md:w-1/2'>
                         <InputNormal
