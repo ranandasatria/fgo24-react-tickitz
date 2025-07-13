@@ -10,7 +10,7 @@ const MovieCard = ({ movie, genres, time }) => {
   return (
     <div className="flex gap-3 sm:gap-4 items-start mb-4 sm:mb-6">
       <img
-        src={movie.poster_path}
+        src={movie.image}
         alt={movie.title}
         className="w-20 sm:w-24 h-28 sm:h-36 rounded sm:rounded-md object-cover"
       />
